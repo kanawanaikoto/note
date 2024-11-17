@@ -1,0 +1,7 @@
+{
+  "layered-image":
+  {
+    "background" : "$media:note_app",
+    "foreground" : "$media:note_app"
+  }
+}
