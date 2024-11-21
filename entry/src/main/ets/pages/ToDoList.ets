@@ -1,44 +1,84 @@
-
-import {TaskDataModel} from '../entryability/Models';
+import {TodoModels} from '../model/ToDoModels';
 import Item_ToDoList from '../components/Item_ToDoList'
+import CustomEditDialog from '../components/CustomEditDialog';
 
 @Entry
 @Component
-export default struct ToDoList{
+export default struct ToDoList {
 
-  private totalData: Array<string> = [] // 总数据
+  @State @Watch('List_ToDoList') private TaskDataModel: TodoModels = new TodoModels()
 
-  aboutToAppear(): void {
-    this.totalData = new TaskDataModel().getData() // 获取数据
+  @State isEditDone: boolean = false
+
+  @State editContent: string = ""
+
+  List_ToDoList(){
+
+  }
+
+  onClose = ()=>{
+    this.isEditDone = false
+  }
+
+  onCreate = ()=>{
+    this.TaskDataModel.addData(this.editContent)
+    this.isEditDone = false
   }
 
   build() {
-     Column({space: 6}) {
-       // 顶部标题
-       Column(){
-         Column(){
-           Blank()
-           Image($r("app.media.Setting")).width(32)
-         }.width("100%").height(32).alignItems(HorizontalAlign.End)
-         Text("待办").fontSize(40).fontColor("#2c2c2c")
-       }.backgroundColor(Color.White)
-        .width('100%')
-        .height(110)
-        .alignItems(HorizontalAlign.Start)
-        .padding(16)
-       // 待办事项
-       //ForEach(this.totalData, (item:string)=>{
-       //  Item_ToDoList({task_content:item})
-       //})
-       List({space: 6}){
-         ForEach(this.totalData, (item:string)=>{
-           ListItem(){
-             Item_ToDoList({task_content:item})
-           }
-         })
-       }.alignListItem(ListItemAlign.Center)//元素布局
-     }.width('100%')
-      .height('100%')
-      .backgroundColor("#F1F3F5")
+    Stack({alignContent: Alignment.BottomEnd}) {
+      // 主要内容
+      Column({ space: 6 }) {
+        // 顶部标题
+        Column() {
+          Column() {
+            Blank()
+            Image($r("app.media.Setting")).width(32)
+          }.width("100%").height(32).alignItems(HorizontalAlign.End)
+          Text("待办").fontSize(40).fontColor("#2c2c2c")
+        }.backgroundColor(Color.White)
+         .width('100%')
+         .height(110)
+         .alignItems(HorizontalAlign.Start)
+         .padding(16)
+        // 待办事项
+        List({ space: 6 }) {
+          ForEach(this.TaskDataModel.getData(), (item: string) => {
+            ListItem() {
+              Item_ToDoList({ task_content: item })
+            }
+          })
+        }.alignListItem(ListItemAlign.Center) // 元素布局
+      }.width('100%')
+       .height('100%')
+       .backgroundColor("#F1F3F5")
+
+
+      // 弹窗
+      if(this.isEditDone){
+        CustomEditDialog({
+          edit: this.editContent,
+          onClose: this.onClose,
+          onCreate: this.onCreate
+        }).zIndex(4)
+      }
+
+
+      // 右下角的圆形加号按钮
+      Button() {
+        Image($r('app.media.push'))
+          .width(50)
+          .height(50)
+      }
+      .width(50)  // 与图片宽度一致
+      .height(50)  // 与图片高度一致
+      .position({ x: '75%', y: '90%' })
+      .backgroundColor('transparent')  // 设置背景颜色为透明
+      .zIndex(3)
+      .onClick(() => {
+        // 添加待办事项的逻辑
+        this.isEditDone = true
+      })
+    }
   }
 }

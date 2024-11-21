@@ -28,10 +28,6 @@ export default struct Item_ToDoList{// 待办事项
         .opacity(this.isComplete ? 0.5 : 1) // 透明度
         .fontSize(20)// 字体大小
         .fontWeight(500)// 加粗
-        .onClick(()=>{
-          //点击事件
-          console.log("点击事件")
-        })
     }
     .borderRadius(24)// 圆角
     .backgroundColor(Color.White)// 背景色
