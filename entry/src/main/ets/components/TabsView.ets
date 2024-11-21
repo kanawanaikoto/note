@@ -1,4 +1,5 @@
 import note_homepage from "../pages/note_homepage";
+import ToDoList from "../pages/ToDoList";
 
 @Component // 声明组件
 export default struct TabBarView{
@@ -24,6 +25,7 @@ export default struct TabBarView{
         TabContent() {
          Column(){
             //内容
+           ToDoList()
           }.width('100%')
            .height('100%')
            .backgroundColor('#adf5f5f5')

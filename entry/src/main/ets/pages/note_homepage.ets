@@ -10,7 +10,7 @@ export default struct note_homepage{
            Image($r("app.media.Setting")).width(32)
          }.width("100%").height(32).alignItems(HorizontalAlign.End)
          Text("便签").fontSize(40).fontColor("#2c2c2c")
-       }.backgroundColor("#f3f3f3")
+       }.backgroundColor(Color.White)
         .width('100%')
         .height(110)
         .alignItems(HorizontalAlign.Start)
@@ -27,5 +27,6 @@ export default struct note_homepage{
           .margin({ left: 16, right: 16, bottom: 20 })
      }.width('100%')
       .height('100%')
+      .backgroundColor("#F1F3F5")
   }
 }
