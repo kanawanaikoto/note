@@ -1,5 +1,5 @@
-
 @Observed
+
 export default class NoteDataModel{
 
   id:number = 0
@@ -12,6 +12,5 @@ export default class NoteDataModel{
     this.id = id
     this.updateTime = updateTime
     this.content = content
-
   }
 }

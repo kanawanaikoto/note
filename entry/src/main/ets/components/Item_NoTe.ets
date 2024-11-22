@@ -1,4 +1,4 @@
-import NoteDataModel from "../model/NoTeModels"
+import NoteDataModel from "../model/NoteModel"
 
 interface TimeFormat {
   range: string
