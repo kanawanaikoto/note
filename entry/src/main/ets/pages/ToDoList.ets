@@ -38,17 +38,23 @@ export default struct ToDoList {
           Text("待办").fontSize(40).fontColor("#2c2c2c")
         }.backgroundColor(Color.White)
          .width('100%')
-         .height(110)
+         .height('15%')
          .alignItems(HorizontalAlign.Start)
          .padding(16)
         // 待办事项
-        List({ space: 6 }) {
-          ForEach(this.TaskDataModel.getData(), (item: string) => {
-            ListItem() {
-              Item_ToDoList({ task_content: item })
-            }
-          })
-        }.alignListItem(ListItemAlign.Center) // 元素布局
+        Column(){
+          List({ space: 6 }) {
+            ForEach(this.TaskDataModel.getData(), (item: string) => {
+              ListItem() {
+                Item_ToDoList({ task_content: item })
+              }.height(60)
+            })
+          }
+          .alignListItem(ListItemAlign.Center) // 元素布局
+          .height('100%')
+        }
+        .height('85%')
+
       }.width('100%')
        .height('100%')
        .backgroundColor("#F1F3F5")

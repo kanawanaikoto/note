@@ -17,7 +17,7 @@ export default struct TabBarView{
         TabContent() {
           Column(){
             //内容
-            note_homepage()
+            note_homepage().height('100%')
           }.width('100%')
            .height('100%')
            .backgroundColor('#adf5f5f5')
@@ -25,7 +25,7 @@ export default struct TabBarView{
         TabContent() {
          Column(){
             //内容
-           ToDoList()
+           ToDoList().height('100%')
           }.width('100%')
            .height('100%')
            .backgroundColor('#adf5f5f5')
