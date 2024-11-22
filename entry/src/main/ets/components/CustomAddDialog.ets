@@ -1,13 +1,12 @@
 
 
 @Component
-export default struct CustomEditDialog{
+export default struct CustomAddDialog{
 
   @Link edit:string
 
-  onClose: ()=>void =()=> {}// 点击关闭
-  onDelete: ()=>void =()=> {}// 点击删除
-  onCreate: ()=>void =()=> {}// 点击确定
+  onClose: ()=>void =()=> {}
+  onCreate: ()=>void =()=> {}
 
   build() {
     Stack({alignContent: Alignment.Bottom}) {
@@ -46,19 +45,6 @@ export default struct CustomEditDialog{
           .borderRadius(30)
           .justifyContent(FlexAlign.Center)
 
-          // 删除
-          Column(){
-            Image($r('app.media.delete')).width(24)
-          }
-          .onClick(()=>{
-            this.onDelete()
-          })
-          .backgroundColor('#F1F3F5')
-          .width(60)
-          .height(60)
-          .borderRadius(30)
-          .justifyContent(FlexAlign.Center)
-
           // 确定
           Column(){
             Image($r('app.media.save')).width(24)
@@ -90,3 +76,11 @@ export default struct CustomEditDialog{
   }
 }
 
+@Preview
+@Component
+struct CustomEditDialogPreview {
+  @State edit:string = 'hello'
+  build() {
+    CustomAddDialog({edit:this.edit})
+  }
+}

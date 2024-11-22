@@ -40,3 +40,11 @@ export default struct TabBarView{
      .alignItems(HorizontalAlign.Center)
   }
 }
+
+// @Preview
+// @Component
+// struct TabBarViewPreview {
+//   build() {
+//     TabBarView()
+//   }
+// }

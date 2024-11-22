@@ -1,6 +1,6 @@
 import {TodoModels} from '../model/ToDoModels';
 import Item_ToDoList from '../components/Item_ToDoList'
-import CustomEditDialog from '../components/CustomEditDialog';
+import CustomAddDialog from '../components/CustomAddDialog';
 
 @Entry
 @Component
@@ -62,7 +62,7 @@ export default struct ToDoList {
 
       // 弹窗
       if(this.isEditDone){
-        CustomEditDialog({
+        CustomAddDialog({
           edit: this.editContent,
           onClose: this.onClose,
           onCreate: this.onCreate

@@ -6,6 +6,7 @@ interface TimeFormat {
   formatTime: string
 }
 
+// 时间格式化
 function getFormatTime(time: number): TimeFormat {
   const date = new Date(time)
   const today = new Date()
@@ -38,7 +39,11 @@ function getFormatTime(time: number): TimeFormat {
 
 @Component
 export default struct Item_NoTe {
+
   @ObjectLink note: NoteDataModel
+
+  onNoteClick : (note: NoteDataModel) => void = ()=>{}
+
   build() {
     Row(){
       Stack() {
@@ -105,6 +110,9 @@ export default struct Item_NoTe {
           .margin({ right: 27 })
         }
        }
+       .onClick(()=>{
+         this.onNoteClick(this.note)
+       })
     }
     .padding({ left: 20,right: 20})
   }
