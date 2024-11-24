@@ -141,7 +141,7 @@ export default struct note_homepage {
     Stack() {
       Column({ space: 10 }) {
         // 顶部标题
-        Column({ space: 8 }) {
+        Column({ space: 8 }){
           Column({ space: 6 }) {
             Column() {
               Blank()

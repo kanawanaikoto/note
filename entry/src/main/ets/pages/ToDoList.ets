@@ -1,27 +1,29 @@
-import {TodoModels} from '../model/ToDoModels';
+import { Task, TodoModels} from '../model/ToDoModels';
 import Item_ToDoList from '../components/Item_ToDoList'
 import CustomAddDialog from '../components/CustomAddDialog';
 
 @Entry
 @Component
-export default struct ToDoList {
+export default struct ToDoList{
 
-  @State @Watch('List_ToDoList') private TaskDataModel: TodoModels = new TodoModels()
+  private OriginTodoList: TodoModels = new TodoModels()
+  @State TodoList: Task[] = this.OriginTodoList.getData()
 
   @State isEditDone: boolean = false
 
   @State editContent: string = ""
 
-  List_ToDoList(){
+  @Link TaskStairs: Task // 接力上传ToDoList 中 Task
 
-  }
+  @Consume ifListEditing: boolean
 
   onClose = ()=>{
     this.isEditDone = false
   }
 
   onCreate = ()=>{
-    this.TaskDataModel.addData(this.editContent)
+    this.OriginTodoList.addData(this.editContent)
+    this.TodoList = this.OriginTodoList.getData()
     this.isEditDone = false
   }
 
@@ -44,9 +46,9 @@ export default struct ToDoList {
         // 待办事项
         Column(){
           List({ space: 6 }) {
-            ForEach(this.TaskDataModel.getData(), (item: string) => {
+            ForEach(this.TodoList, (item: Task) => {
               ListItem() {
-                Item_ToDoList({ task_content: item })
+                Item_ToDoList({ task_content: item, task_content_tmp: this.TaskStairs })
               }.height(60)
             })
           }
@@ -84,6 +86,8 @@ export default struct ToDoList {
       .onClick(() => {
         // 添加待办事项的逻辑
         this.isEditDone = true
+        this.ifListEditing = false
+        this.editContent = ""
       })
     }
   }
