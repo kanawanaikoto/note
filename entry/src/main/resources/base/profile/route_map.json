@@ -1,0 +1,10 @@
+{
+  "routerMap": [
+
+    {
+      "name": "Note",
+      "pageSourceFile": "src/main/ets/pages/note.ets",
+      "buildFunction": "getNote"
+    }
+  ]
+}

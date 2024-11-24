@@ -7,7 +7,7 @@ import { relationalStore } from "@kit.ArkData";
  * NoteDataModel类提供了对笔记数据的基本操作，包括插入、删除、更新和查询
  * 它通过Rdb类与底层数据库进行交互
  */
-export default class NoteDataModel{
+export default class NoTeTable{
 
   // 数据库 使用常量文件“CommonConstants”中配置的参数
   private noteTable = new Rdb(CommonConstants.MEMO_TABLE.tableName, CommonConstants.MEMO_TABLE.sqlCreate, CommonConstants.MEMO_TABLE.columns);

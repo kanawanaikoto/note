@@ -1,6 +1,7 @@
 {
   "src": [
     "pages/Index",
-    "pages/ToDoList"
+    "pages/note",
+    "pages/note_homepage"
   ]
 }
