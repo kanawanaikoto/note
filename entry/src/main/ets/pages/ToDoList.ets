@@ -69,7 +69,6 @@ export default struct ToDoList {
         }).zIndex(4)
       }
 
-
       // 右下角的圆形加号按钮
       Button() {
         Image($r('app.media.push'))

@@ -8,6 +8,10 @@ import NoTeTable from '../database/NoTeTable'
 @Entry
 @Component
 export default struct note_homepage {
+
+  // 路径栈
+   pathStack: NavPathStack = AppStorage.get("PathStack") as NavPathStack
+
   // 缓存的原始数组
   originNoteList: NoteDataModel[] = []
   // 显示数据
@@ -26,8 +30,8 @@ export default struct note_homepage {
   @State isEdit: boolean = false
   // 编辑索引
   @State editIndex: number = -1
+  // 数据库
   private NoteTable: NoTeTable = new NoTeTable()
-
   // 清空搜索框
   clean = () => {
     this.searchText = ""
@@ -82,8 +86,9 @@ export default struct note_homepage {
     })
 
   }
-  // 编辑弹窗
-  onNoteEdit = (note: NoteDataModel) => {
+
+  getId = (note: NoteDataModel)=>{
+    console.log(JSON.stringify(note))
     for (let i = 0; i < this.originNoteList.length; i++) {
       if (this.originNoteList[i].id === note.id) {
         this.editNote = this.originNoteList[i].content
@@ -91,7 +96,14 @@ export default struct note_homepage {
         break
       }
     }
-    this.isEdit = true
+}
+
+  // 编辑弹窗
+  onNoteEdit = (note: NoteDataModel) => {
+     this.getId(note)
+    // this.isEdit = true
+
+    this.getNote(note)
 
   }
   // 删除
@@ -137,83 +149,139 @@ export default struct note_homepage {
     })
   }
 
+  //打开笔记页面
+  getNote(note: NoteDataModel){
+
+    this.pathStack.pushPathByName('Note',note, (popInfo) => {
+//      console.log('Pop page name is: ' + popInfo.info.name + ', result: ' + JSON.stringify(popInfo.result))
+      if(popInfo.result){
+
+        if(popInfo.result['id']==-1){
+          this.addNote = popInfo.result['content']
+          this.onCreate()
+        }
+        else{
+          this.editNote = popInfo.result['content']
+          this.onEdit()
+        }
+      }
+    })
+  }
+
+  // 删除按钮
+  @Builder
+  getListEnd(item:NoteDataModel){
+    Button() {
+      Image($r('app.media.delete'))
+        .width(40)
+        .height(40)
+    }
+    .backgroundColor('#d9d9d9')
+    .width(50)
+    .height(50)
+    .onClick(()=>{
+      this.editIndex = this.originNoteList.indexOf(item)
+      this.onDelete()
+    })
+  }
+
+  // onPageShow(): void {
+  //   console.log("onPageShow")
+  //   const value: object | null = this.getUIContext().getRouter().getParams();
+  //   if(value?.['note']&&value['boolean']===true){
+  //     this.addNote = value['note'].content
+  //     this.onCreate()
+  //   }
+  // }
+
   build() {
-    Stack() {
-      Column({ space: 10 }) {
-        // 顶部标题
-        Column({ space: 8 }) {
-          Column({ space: 6 }) {
-            Column() {
-              Blank()
-              Image($r("app.media.Setting")).width(32)
-            }.width("100%").height(32).alignItems(HorizontalAlign.End)
+    NavDestination() {
+      Stack() {
+        Column({ space: 10 }) {
+          // 顶部标题
+          Column({ space: 8 }) {
+            Column({ space: 6 }) {
+              Column() {
+                Blank()
+                Image($r("app.media.Setting")).width(32)
+              }.width("100%").height(32).alignItems(HorizontalAlign.End)
 
-            Text("便签").fontSize(40).fontColor("#2c2c2c")
-
-            // 搜索框
-            components_search({ searchText: this.searchText, clean: this.clean })
-              .width('100%')
-          }
+              Text("便签").fontSize(40).fontColor("#2c2c2c")
+              // 搜索框
+              components_search({ searchText: this.searchText, clean: this.clean })
+                .width('100%')
+            }
+            .backgroundColor(Color.White)
+            .width('100%')
+            .height(165)
+            .alignItems(HorizontalAlign.Start)
+            .padding(16)
+          }.height('23%')
           .backgroundColor(Color.White)
           .width('100%')
-          .height(165)
-          .alignItems(HorizontalAlign.Start)
-          .padding(16)
-        }.height('23%')
-        .backgroundColor(Color.White)
+
+          // 主体内容
+          Column({ space: 0 }) {
+            List({ space: 6 }) {
+              ForEach(this.note, (item: NoteDataModel) => {
+                ListItem() {
+                  Item_NoTe({ note: item, onNoteClick: this.onNoteEdit })
+                }
+                .swipeAction({
+                  end: {
+                    builder:()=>{
+                      this.getListEnd(item)
+                    }
+                  }
+                })
+
+              })
+            }.alignListItem(ListItemAlign.Center) // 元素布局
+            .height('100%')
+          }.height('77%')
+        }.backgroundColor('#F1F3F5')
         .width('100%')
+        .height('100%')
 
-        // 主体内容
-        Column({ space: 0 }) {
-          List({ space: 6 }) {
-            ForEach(this.note, (item: NoteDataModel) => {
-              ListItem() {
-                Item_NoTe({ note: item, onNoteClick: this.onNoteEdit })
-              }
-            })
-          }.alignListItem(ListItemAlign.Center) // 元素布局
-          .height('100%')
-        }.height('77%')
-      }.backgroundColor('#F1F3F5')
-      .width('100%')
+        // 新建弹窗
+        if (this.isAdd) {
+          CustomAddDialog({
+            edit: this.addNote,
+            onClose: this.onClose,
+            onCreate: this.onCreate
+          }).zIndex(4)
+        }
+
+        // 编辑弹窗
+        if (this.isEdit) {
+          CustomEditDialog({
+            edit: this.editNote,
+            onClose: this.onClose,
+            onDelete: this.onDelete,
+            onCreate: this.onEdit
+          }).zIndex(4)
+        }
+
+        // 右下角的圆形加号按钮
+        Button() {
+          Image($r('app.media.push'))
+            .width(50)
+            .height(50)
+        }
+        .width(50) // 与图片宽度一致
+        .height(50) // 与图片高度一致
+        .position({ x: '75%', y: '90%' })
+        .backgroundColor('transparent') // 设置背景颜色为透明
+        .zIndex(3)
+        .onClick(() => {
+          // 添加逻辑
+          // this.isAdd = true
+          console.log("add")
+          this.getNote(new NoteDataModel(-1, Date.now(), ""))
+        })
+      }
       .height('100%')
-
-      // 新建弹窗
-      if (this.isAdd) {
-        CustomAddDialog({
-          edit: this.addNote,
-          onClose: this.onClose,
-          onCreate: this.onCreate
-        }).zIndex(4)
-      }
-
-      // 编辑弹窗
-      if (this.isEdit) {
-        CustomEditDialog({
-          edit: this.editNote,
-          onClose: this.onClose,
-          onDelete: this.onDelete,
-          onCreate: this.onEdit
-        }).zIndex(4)
-      }
-
-      // 右下角的圆形加号按钮
-      Button() {
-        Image($r('app.media.push'))
-          .width(50)
-          .height(50)
-      }
-      .width(50) // 与图片宽度一致
-      .height(50) // 与图片高度一致
-      .position({ x: '75%', y: '90%' })
-      .backgroundColor('transparent') // 设置背景颜色为透明
-      .zIndex(3)
-      .onClick(() => {
-        // 添加逻辑
-        this.isAdd = true
-      })
     }
-    .height('100%')
   }
 }
-   
+
