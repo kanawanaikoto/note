@@ -31,4 +31,13 @@ export class TodoModels{
     }
     this.tasks_tmp = TodoModels.tasks
   }
-}
+  public deleteDataByIndex(index: number){
+    let i: number = 0
+    for(i;i<TodoModels.tasks.length;i++){
+      if(TodoModels.tasks[i].index == index){
+        TodoModels.tasks.splice(i,1)
+        break
+      }
+    }
+    this.tasks_tmp = TodoModels.tasks
+  }}

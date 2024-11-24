@@ -17,6 +17,24 @@ export default struct ToDoList{
 
   @Consume ifListEditing: boolean
 
+  @Builder
+  getListEnd(item:Task){
+    Row() {
+      Button() {
+        Image($r('app.media.delete'))
+          .width(40)
+          .height(40)
+      }
+      .backgroundColor('#d9d9d9')
+      .width(50)
+      .height(50)
+      .onClick(() => {
+        this.OriginTodoList.deleteDataByIndex(item.index)
+        this.TodoList = this.OriginTodoList.getData()
+      })
+    }.padding("4vp").justifyContent(FlexAlign.SpaceEvenly)
+  }
+
   onClose = ()=>{
     this.isEditDone = false
   }
@@ -44,12 +62,18 @@ export default struct ToDoList{
          .alignItems(HorizontalAlign.Start)
          .padding(16)
         // 待办事项
-        Column(){
+        Column({ space: 0 }){
           List({ space: 6 }) {
             ForEach(this.TodoList, (item: Task) => {
               ListItem() {
                 Item_ToDoList({ task_content: item, task_content_tmp: this.TaskStairs })
               }.height(60)
+              .swipeAction({end:{
+                builder:()=> {
+                  this.getListEnd(item)
+                },
+              }
+              })
             })
           }
           .alignListItem(ListItemAlign.Center) // 元素布局

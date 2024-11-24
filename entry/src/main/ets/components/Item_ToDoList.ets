@@ -92,7 +92,7 @@ export default struct Item_ToDoList{// 待办事项
       })
     }
 }
-@Entry
+@Preview
 @Component
 struct Test{
   build() {
