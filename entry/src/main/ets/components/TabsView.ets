@@ -5,9 +5,9 @@ import { Task, TodoModels} from '../model/ToDoModels';
 @Component // 声明组件
 export default struct TabBarView{
   @State currentIndex: number = 0;//底部导航栏当前选中项
-  @State TopOfTaskStairs: Task = {id: 0, task: ""} // 连接到src/main/ets/components/Item_ToDoList.ets
+
   @Provide ifListEditing: boolean = false
-  @Provide IndexOfListChanging: number = this.TopOfTaskStairs.id
+
   @State toDoList: TodoModels = new TodoModels()
   //@Builder 转变为视图函数
   @Builder tabBuilder(title: string,targetIndex:number,icon:Resource,icon_f:Resource) {
@@ -30,7 +30,7 @@ export default struct TabBarView{
         TabContent() {
          Column(){
             //内容
-           ToDoList({TaskStairs:this.TopOfTaskStairs}).height('100%')
+           ToDoList().height('100%')
           }.width('100%')
            .height('100%')
            .backgroundColor('#adf5f5f5')
@@ -44,8 +44,7 @@ export default struct TabBarView{
      .backgroundColor("#f3f3f3")
      .alignItems(HorizontalAlign.Center)
       .onClick(() => {
-        this.toDoList.changeDataByIndex(this.TopOfTaskStairs.task, this.TopOfTaskStairs.id)
-        this.ifListEditing = false //当每次点击主界面时，将位于pages/ToDoList的同名变量设为false，这样就能退出编辑状态
+
       })
   }
 }

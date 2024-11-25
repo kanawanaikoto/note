@@ -42,6 +42,11 @@ export default struct ToDoList{
     }.padding("4vp").justifyContent(FlexAlign.SpaceEvenly)
   }
 
+  // 组件加载时执行
+  aboutToAppear(): void {
+    this.TodoList = this.OriginTodoList.get()
+  }
+
   // 关闭编辑对话框
   onClose = ()=>{
     this.isEditDone = false

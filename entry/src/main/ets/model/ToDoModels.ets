@@ -19,11 +19,24 @@ export class TodoModels{
   private todotable: ToDoTable = new ToDoTable()
   private todo: Task[] = []
 
+  // 初始化
   constructor() {
-    this.todotable.query((data: Task[])=>{
-      this.todo = data
+    this.todotable.getRadState(()=>{
+      this.todotable.query((data: Task[])=>{
+        this.todo = data
+      })
     })
   }
+
+  public get():Array<Task>{
+    this.todotable.getRadState(()=>{
+      this.todotable.query((data: Task[])=>{
+        this.todo = data
+      })
+    })
+    return this.todo
+  }
+
   public getData():Array<Task> {
     return this.todo
 	}

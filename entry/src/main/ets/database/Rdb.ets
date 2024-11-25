@@ -99,6 +99,7 @@ export default class Rdb {
     const valueBucket: relationalStore.ValuesBucket = data;
 
     if (this.rdbStore) {
+      // 执行插入操作
       this.rdbStore.insert(this.tableName, valueBucket, (err, ret) => {
         if (err) {
           Logger.error(CommonConstants.RDB_TAG, `insertData() failed, err: ${err}`);
@@ -179,6 +180,7 @@ export default class Rdb {
       return;
     }
 
+    // 执行查询操作
     if (this.rdbStore) {
       this.rdbStore.query(predicates, this.columns, (err, resultSet) => {
         if (err) {
