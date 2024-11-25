@@ -1,17 +1,12 @@
-import { Task, TodoModels} from '../model/ToDoModels';
+import { Task } from '../model/ToDoModels';
 import ToDoList from '../pages/ToDoList';
 
 @Component
 export default struct Item_ToDoList{// 待办事项
 
-  private task_content: Task = {index: 0, task: ""}
+  @ObjectLink task: Task
 
-  @Link task_content_tmp: Task // 连接到src/main/ets/components/TabsView.ets
-
-  @State isComplete:boolean = false
-
-  @Consume ifListEditing: boolean //接受来自父界面（index）的数据
-  @Consume IndexOfListChanging: number //接受来自父界面（index）的数据
+  @Link IndexOfListChanging: number
 
   @Builder
   CreateIcon(icon:Resource){ // 图标
@@ -27,7 +22,7 @@ export default struct Item_ToDoList{// 待办事项
         //按钮部分
         Column() {
           Button() {
-            if (this.isComplete) {
+            if (this.task.complete!==0) {
               Image($r("app.media.ic_ok"))
                 .width(30)
                 .height(30)
@@ -43,22 +38,21 @@ export default struct Item_ToDoList{// 待办事项
           .height('100%')
 
           .onClick(() => {
-            this.isComplete = !this.isComplete
+            this.task.complete = this.task.complete === 0 ? 1 : 0
           })
         }
         .width('20%')
         .height('100%')
 
         //文字部分
-        if (this.ifListEditing && this.task_content.index === this.IndexOfListChanging) {
+        if (this.task.id === this.IndexOfListChanging) {
           Column() {
             TextInput({
-              placeholder: this.task_content.task,
-              text: this.task_content.task
+              placeholder: this.task.task,
+              text: this.task.task
             })
               .onChange((strIn: string) => {
-                this.task_content.task = strIn
-                this.task_content_tmp = this.task_content
+                this.task.task = strIn
               })
           }
           .width('70%')
@@ -69,9 +63,9 @@ export default struct Item_ToDoList{// 待办事项
         } else {
           Column() {
             //this.TaskDataModel.changeDataByIndex(this.task_content.task,this.task_content.index)
-            Text(this.task_content.task)
-              .decoration({ type: this.isComplete ? TextDecorationType.LineThrough : TextDecorationType.None })// 删除线
-              .opacity(this.isComplete ? 0.5 : 1)// 透明度
+            Text(this.task.task)
+              .decoration({ type: this.task.complete===1 ? TextDecorationType.LineThrough : TextDecorationType.None })// 删除线
+              .opacity(this.task.complete===1 ? 0.5 : 1)// 透明度
               .fontSize(20)// 字体大小
               .fontWeight(500) // 加粗
           }
@@ -87,28 +81,7 @@ export default struct Item_ToDoList{// 待办事项
       .width("90%") // 宽度
       .height(60) // 高度
       .onClick(() => { //文本编辑
-        this.ifListEditing = true
-        this.IndexOfListChanging = this.task_content.index
+        this.IndexOfListChanging = this.task.id
       })
     }
-}
-@Preview
-@Component
-struct Test{
-  build() {
-    Column() {
-      test1()
-    }
-  }
-}
-
-@Component
-struct test1{
-  @Provide ifListEditing: boolean = false
-  @State tt1: Task = { index: 0, task: "" }
-  build() {
-    Column() {
-      Item_ToDoList({ task_content_tmp:  this.tt1})
-    }
-  }
 }

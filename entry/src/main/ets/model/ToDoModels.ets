@@ -1,43 +1,62 @@
-import ToDoList from "../pages/ToDoList"
 
-export interface  Task{
-  index: number
-  task: string
+import ToDoTable from "../database/ToDoTable"
+
+@Observed
+export class  Task{
+  id: number =0
+  task: string =''
+  complete: number =0// 是否完成
+  constructor(id: number, task: string, complete: number) {
+    this.id = id
+    this.task = task
+    this.complete = complete
+  }
 }
+
 @Observed
 export class TodoModels{
-  private static tasks:Array<Task> = [{index: 1, task: 'Task1'}]
-  private tasks_tmp:Array<Task>
-  private static index: number = 2 //为每个待办事项编号
+
+  private todotable: ToDoTable = new ToDoTable()
+  private todo: Task[] = []
 
   constructor() {
-    this.tasks_tmp = TodoModels.tasks
+    this.todotable.query((data: Task[])=>{
+      this.todo = data
+    })
   }
   public getData():Array<Task> {
-    return this.tasks_tmp
-  }
+    return this.todo
+	}
   public addData(data:string):void {
-    TodoModels.tasks.push({index: TodoModels.index, task: data})
-    this.tasks_tmp = TodoModels.tasks
-    TodoModels.index++;
+    let task: Task = new Task(0, data, 0)
+    this.todotable.insertData(task, (id: number)=>{
+      task.id = id
+      this.todo.push(task)
+    })
   }
+  // 修改
   public changeDataByIndex(data: string, index: number){
-    let i: number = 0
-    for(i;i<TodoModels.tasks.length;i++){
-      if(TodoModels.tasks[i].index == index){
-        TodoModels.tasks[i].task = data
+    let i = 0
+    for(;i<this.todo.length;i++){
+      if(this.todo[i].id === index){
         break
       }
     }
-    this.tasks_tmp = TodoModels.tasks
+    this.todotable.updateData(this.todo[i], ()=>{
+      this.todo[i].task = data
+    })
   }
+
+  // 删除
   public deleteDataByIndex(index: number){
-    let i: number = 0
-    for(i;i<TodoModels.tasks.length;i++){
-      if(TodoModels.tasks[i].index == index){
-        TodoModels.tasks.splice(i,1)
+    let i = 0
+    for(;i<this.todo.length;i++){
+      if(this.todo[i].id === index){
         break
       }
     }
-    this.tasks_tmp = TodoModels.tasks
-  }}
+    this.todotable.deleteData(this.todo[i], ()=>{
+      this.todo.splice(i, 1)
+    })
+  }
+}

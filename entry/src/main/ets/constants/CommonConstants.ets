@@ -1,5 +1,5 @@
 import relationalStore from '@ohos.data.relationalStore'
-import { MemoTable } from '../model/TableInterface'
+import { Table } from '../model/TableInterface'
 
 /**
  * 定义应用中常用的常量
@@ -19,10 +19,16 @@ export default class CommonConstants {
    * 表的配置
    * 包含表名，创建表的SQL语句和列名
    */
-  static readonly MEMO_TABLE:MemoTable = {
-    tableName:'memoTable',
-    sqlCreate:'CREATE TABLE IF NOT EXISTS memoTable(id INTEGER PRIMARY KEY AUTOINCREMENT, updateTime INTEGER, content TEXT)',
+  static readonly NOTE_TABLE:Table = {
+    tableName:'noteTable',
+    sqlCreate:'CREATE TABLE IF NOT EXISTS noteTable(id INTEGER PRIMARY KEY AUTOINCREMENT, updateTime INTEGER, content TEXT)',
     columns:['id','updateTime','content']
+  }
+
+  static readonly TODO_TABLE:Table = {
+    tableName:'todoTable',
+    sqlCreate:'CREATE TABLE IF NOT EXISTS todoTable(id INTEGER PRIMARY KEY AUTOINCREMENT, task TEXT, complete INTEGER)',
+    columns:['id','task','complete']
   }
 
   /**
@@ -35,7 +41,7 @@ export default class CommonConstants {
    * 表调试标签
    * 用于在调试输出时标识特定表相关的日志
    */
-  static readonly TABLE_TAG = '[Debug.memoTable]';
+  static readonly TABLE_TAG = '[Debug.Table]';
 
   /**
    * 索引调试标签

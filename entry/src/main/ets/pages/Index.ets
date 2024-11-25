@@ -59,11 +59,6 @@ struct Index {
      AppStorage.setOrCreate("PathStack", this.pathStack)
    }
 
-  @State TopOfTaskStairs: Task = {index: 0, task: ""} // 连接到src/main/ets/components/Item_ToDoList.ets
-  @Provide ifListEditing: boolean = false // 标记是否处在编辑状态
-  @Provide IndexOfListChanging: number = this.TopOfTaskStairs.index //标记编辑待办事项编号
-  @State toDoList: TodoModels = new TodoModels() //待办事项数据
-
   build() {
     // 使用Navigation组件来实现页面导航，传入路径栈以管理导航状态
     Navigation(this.pathStack) {
@@ -71,13 +66,9 @@ struct Index {
         if(this.index == 0){
           note_homepage().height('100%')
         }else{
-          ToDoList({TaskStairs: this.TopOfTaskStairs}).height('100%')
+          ToDoList().height('100%')
         }
       }.width('100%').height('100%')
-      .onClick(() => {
-        this.toDoList.changeDataByIndex(this.TopOfTaskStairs.task, this.TopOfTaskStairs.index)
-        this.ifListEditing = false //当每次点击主界面时，将位于pages/ToDoList的同名变量设为false，这样就能退出编辑状态
-      })
     }
     .mode(NavigationMode.Stack)
     .titleMode(NavigationTitleMode.Free) // 自定义标题

@@ -2,21 +2,27 @@ import { Task, TodoModels} from '../model/ToDoModels';
 import Item_ToDoList from '../components/Item_ToDoList'
 import CustomAddDialog from '../components/CustomAddDialog';
 
+// 定义ToDoList组件，用于展示和管理待办事项列表
 @Entry
 @Component
 export default struct ToDoList{
 
+  // 初始化待办事项列表模型
   private OriginTodoList: TodoModels = new TodoModels()
-  @State TodoList: Task[] = this.OriginTodoList.getData()
 
+  // 获取待办事项列表数据
+  @State TodoList: Task[] = []
+
+  // 编辑待办事项的状态
   @State isEditDone: boolean = false
 
+  // 编辑待办事项的内容
   @State editContent: string = ""
 
-  @Link TaskStairs: Task // 接力上传ToDoList 中 Task
+  // 当前正在编辑的待办事项索引，-1表示没有编辑
+  @State ifListEditing: number = -1
 
-  @Consume ifListEditing: boolean
-
+  // 构建列表项末尾的操作按钮
   @Builder
   getListEnd(item:Task){
     Row() {
@@ -29,22 +35,26 @@ export default struct ToDoList{
       .width(50)
       .height(50)
       .onClick(() => {
-        this.OriginTodoList.deleteDataByIndex(item.index)
+        // 删除待办事项
+        this.OriginTodoList.deleteDataByIndex(item.id)
         this.TodoList = this.OriginTodoList.getData()
       })
     }.padding("4vp").justifyContent(FlexAlign.SpaceEvenly)
   }
 
+  // 关闭编辑对话框
   onClose = ()=>{
     this.isEditDone = false
   }
 
+  // 创建（添加）新的待办事项
   onCreate = ()=>{
     this.OriginTodoList.addData(this.editContent)
     this.TodoList = this.OriginTodoList.getData()
     this.isEditDone = false
   }
 
+  // 构建ToDoList组件
   build() {
     Stack({alignContent: Alignment.BottomEnd}) {
       // 主要内容
@@ -61,12 +71,12 @@ export default struct ToDoList{
          .height('15%')
          .alignItems(HorizontalAlign.Start)
          .padding(16)
-        // 待办事项
+        // 待办事项列表
         Column({ space: 0 }){
           List({ space: 6 }) {
             ForEach(this.TodoList, (item: Task) => {
               ListItem() {
-                Item_ToDoList({ task_content: item, task_content_tmp: this.TaskStairs })
+                Item_ToDoList({ task: item, IndexOfListChanging: this.ifListEditing })
               }.height(60)
               .swipeAction({end:{
                 builder:()=> {
@@ -109,9 +119,12 @@ export default struct ToDoList{
       .onClick(() => {
         // 添加待办事项的逻辑
         this.isEditDone = true
-        this.ifListEditing = false
+        this.ifListEditing = -1
         this.editContent = ""
       })
     }
+    .onClick(()=>{
+      this.ifListEditing = -1
+    })
   }
 }
