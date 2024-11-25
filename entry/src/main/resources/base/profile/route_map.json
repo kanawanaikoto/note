@@ -5,6 +5,11 @@
       "name": "Note",
       "pageSourceFile": "src/main/ets/pages/note.ets",
       "buildFunction": "getNote"
+    },
+    {
+      "name": "Setting",
+      "pageSourceFile": "src/main/ets/pages/Settings.ets",
+      "buildFunction": "getSetting"
     }
   ]
 }

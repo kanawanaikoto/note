@@ -203,7 +203,11 @@ export default struct note_homepage {
             Column({ space: 6 }) {
               Column() {
                 Blank()
-                Image($r("app.media.Setting")).width(32)
+                Image($r("app.media.Setting"))
+                  .width(32)
+                  .onClick(()=>{
+                    this.pathStack.pushPathByName("Setting",null)
+                  })
               }.width("100%").height(32).alignItems(HorizontalAlign.End)
 
               Text("便签").fontSize(40).fontColor("#2c2c2c")
