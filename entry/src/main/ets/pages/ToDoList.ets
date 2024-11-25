@@ -1,17 +1,19 @@
-import { Task, TodoModels} from '../model/ToDoModels';
+import { Task } from '../model/ToDoModels';
 import Item_ToDoList from '../components/Item_ToDoList'
 import CustomAddDialog from '../components/CustomAddDialog';
+import ToDoTable from "../database/ToDoTable"
 
 // 定义ToDoList组件，用于展示和管理待办事项列表
 @Entry
 @Component
 export default struct ToDoList{
-
   // 初始化待办事项列表模型
-  private OriginTodoList: TodoModels = new TodoModels()
+  private todotable: ToDoTable = new ToDoTable()
+  // 原始待办事项列表数据
+  @State OriginTodoList: Task[] = []
 
   // 获取待办事项列表数据
-  @State TodoList: Task[] = []
+  //@State TodoList: Task[] = []
 
   // 编辑待办事项的状态
   @State isEditDone: boolean = false
@@ -22,6 +24,42 @@ export default struct ToDoList{
   // 当前正在编辑的待办事项索引，-1表示没有编辑
   @State ifListEditing: number = -1
 
+
+   addData(data:string):void {
+    let task: Task = new Task(0, data, 0)
+    this.todotable.insertData(task, (id: number)=>{
+      task.id = id
+      this.OriginTodoList.push(task)
+    })
+    // let i = 0
+    // for(i=0;i<this.todo.length;i++)
+    //   Logger.info("dedataadd"+this.todo[i].id.toString())
+  }
+  // 修改
+  changeDataByIndex(data: string, index: number){
+    let i = 0
+    for(;i<this.OriginTodoList.length;i++){
+      if(this.OriginTodoList[i].id === index){
+        break
+      }
+    }
+    this.todotable.updateData(this.OriginTodoList[i], ()=>{
+      this.OriginTodoList[i].task = data
+    })
+  }
+
+  // 删除
+  deleteDataByIndex(index: number){
+    let i = 0
+    for(;i<this.OriginTodoList.length;i++){
+      if(this.OriginTodoList[i].id === index){
+        break
+      }
+    }
+    this.todotable.deleteData(this.OriginTodoList[i], ()=>{
+      this.OriginTodoList.splice(i, 1)
+    })
+  }
   // 构建列表项末尾的操作按钮
   @Builder
   getListEnd(item:Task){
@@ -36,15 +74,19 @@ export default struct ToDoList{
       .height(50)
       .onClick(() => {
         // 删除待办事项
-        this.OriginTodoList.deleteDataByIndex(item.id)
-        this.TodoList = this.OriginTodoList.getData()
+        this.deleteDataByIndex(item.id)
+        //this.TodoList = this.OriginTodoList
       })
     }.padding("4vp").justifyContent(FlexAlign.SpaceEvenly)
   }
 
   // 组件加载时执行
   aboutToAppear(): void {
-    this.TodoList = this.OriginTodoList.get()
+    this.todotable.getRadState(()=>{
+      this.todotable.query((data: Task[])=>{
+        this.OriginTodoList = data
+      })
+    })
   }
 
   // 关闭编辑对话框
@@ -54,8 +96,8 @@ export default struct ToDoList{
 
   // 创建（添加）新的待办事项
   onCreate = ()=>{
-    this.OriginTodoList.addData(this.editContent)
-    this.TodoList = this.OriginTodoList.getData()
+    this.addData(this.editContent)
+    //this.TodoList = this.OriginTodoList
     this.isEditDone = false
   }
 
@@ -79,7 +121,7 @@ export default struct ToDoList{
         // 待办事项列表
         Column({ space: 0 }){
           List({ space: 6 }) {
-            ForEach(this.TodoList, (item: Task) => {
+            ForEach(this.OriginTodoList, (item: Task) => {
               ListItem() {
                 Item_ToDoList({ task: item, IndexOfListChanging: this.ifListEditing })
               }.height(60)

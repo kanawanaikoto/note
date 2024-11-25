@@ -1,6 +1,7 @@
 
 import ToDoTable from "../database/ToDoTable"
-
+import Logger from "../utils/Logger"
+//功能跟组件放到一块儿就好了，不明觉厉
 @Observed
 export class  Task{
   id: number =0
@@ -46,6 +47,9 @@ export class TodoModels{
       task.id = id
       this.todo.push(task)
     })
+    // let i = 0
+    // for(i=0;i<this.todo.length;i++)
+    //   Logger.info("dedataadd"+this.todo[i].id.toString())
   }
   // 修改
   public changeDataByIndex(data: string, index: number){
@@ -58,6 +62,8 @@ export class TodoModels{
     this.todotable.updateData(this.todo[i], ()=>{
       this.todo[i].task = data
     })
+    // for(i=0;i<this.todo.length;i++)
+    //   Logger.info("dedatachange"+this.todo[i].id.toString())
   }
 
   // 删除
@@ -71,5 +77,7 @@ export class TodoModels{
     this.todotable.deleteData(this.todo[i], ()=>{
       this.todo.splice(i, 1)
     })
+    // for(i=0;i<this.todo.length;i++)
+    //   Logger.info("dedatadelete"+this.todo[i].id.toString())
   }
 }
