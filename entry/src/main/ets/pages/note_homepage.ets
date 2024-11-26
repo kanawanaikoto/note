@@ -84,7 +84,6 @@ export default struct note_homepage {
       this.onOrderChanged()
       this.onClose()
     })
-
   }
 
   getId = (note: NoteDataModel)=>{

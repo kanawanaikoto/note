@@ -1,3 +1,4 @@
+import { mediaquery, promptAction } from "@kit.ArkUI"
 
 @Builder
 export function getSetting() {
@@ -32,8 +33,12 @@ struct SettingsPage {
             Text("版本号:Beta.0.0.1")
               .fontColor('#ff0979e9')
             Blank()
-            Text("GitHub:没开源捏")
+            Text("GitHub")
               .fontColor('#ff0979e9')
+              .onClick(()=>{
+                promptAction.showToast({message: "没开源捏", duration: 1000, bottom: 75})
+                // ("没开源捏")
+              })
             Blank()
             Text("关于我们")
               .fontColor('#ff0979e9')
@@ -64,6 +69,7 @@ struct Item{
   @State title: string = ""
   @State description: string = ""
   @State icon: Resource = $r("app.media.right")
+  
   build() {
     Row() {
       Text(this.title)
@@ -85,6 +91,12 @@ struct Item{
       .margin({right: 10})
       //透明
       .backgroundColor(Color.Transparent)
+      .bindMenu([{
+        value: "分享",action: ()=>{
+          promptAction.showToast({message: "分享", duration: 1000, bottom: 75})
+        }
+      }
+      ])
     }
     .margin(10)
     .width('100%')
