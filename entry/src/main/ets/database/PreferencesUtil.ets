@@ -15,6 +15,7 @@ const KEY_APP_COLOR = 'appColor';
 // 定义应用排序的键名常量
 const KEY_APP_SORT = 'appSort';
 
+
 /**
  * Preferences 工具类，用于操作应用的 Preferences 数据
  */
@@ -71,7 +72,7 @@ export class PreferencesUtil {
    * 保存默认风格到 Preferences 中
    * @param style 默认风格
    */
-  saveDefaultStyle(style: string) {
+  saveDefaultStyle(style: number) {
     this.saveValue(KEY_APP_STYLE, style);
   }
 
@@ -79,7 +80,7 @@ export class PreferencesUtil {
    * 保存更改后的风格到 Preferences 中
    * @param style 更改后的风格
    */
-  saveChangeStyle(style: string) {
+  saveChangeStyle(style: number) {
     this.saveValue(KEY_APP_STYLE, style);
   }
 
@@ -87,8 +88,8 @@ export class PreferencesUtil {
    * 获取更改后的风格
    * @returns 更改后的风格
    */
-  async getChangeStyle(): Promise<string> {
-    return this.getValue(KEY_APP_STYLE, '');
+  async getChangeStyle(): Promise<number> {
+    return this.getValue(KEY_APP_STYLE, 0);
   }
 
   /**
@@ -133,7 +134,7 @@ export class PreferencesUtil {
    * 保存默认排序到 Preferences 中
    * @param sort 默认排序
    */
-  saveDefaultSort(sort: string) {
+  saveDefaultSort(sort: number) {
     this.saveValue(KEY_APP_SORT, sort);
   }
 
@@ -149,8 +150,8 @@ export class PreferencesUtil {
    * 获取更改后的排序
    * @returns 更改后的排序
    */
-  async getChangeSort(): Promise<string> {
-    return this.getValue(KEY_APP_SORT, '');
+  async getChangeSort(): Promise<number> {
+    return this.getValue(KEY_APP_SORT, 0);
   }
 
   /**
@@ -165,8 +166,9 @@ export class PreferencesUtil {
    * @param key 键名
    * @param value 值
    */
-  private saveValue(key: string, value: string | number | boolean) {
+  saveValue(key: string, value: string | number | boolean) {
     let getPreferences: Function = GlobalContext.getContext().getObject('getPreferences') as Function;
+    Logger.info(TAG, 'put the preferences, key: ' + key + ', value: ' + value);
     getPreferences().then(async (preferences: dataPreferences.Preferences) => {
       await preferences.put(key, value);
       preferences.flush();
@@ -181,7 +183,7 @@ export class PreferencesUtil {
    * @param defaultValue 默认值
    * @returns 获取的值
    */
-  private async getValue<T>(key: string, defaultValue: T): Promise<T> {
+  async getValue<T>(key: string, defaultValue: T): Promise<T> {
     let getPreferences: Function = GlobalContext.getContext().getObject('getPreferences') as Function;
     return (await getPreferences()).get(key, defaultValue);
   }
@@ -190,7 +192,7 @@ export class PreferencesUtil {
    * 通用方法，用于从 Preferences 中删除值
    * @param key 键名
    */
-  private async deleteValue(key: string) {
+  async deleteValue(key: string) {
     let getPreferences: Function = GlobalContext.getContext().getObject('getPreferences') as Function;
     const preferences: dataPreferences.Preferences = await getPreferences();
     let deleteValue = preferences.delete(key);

@@ -9,6 +9,12 @@ import NoTeTable from '../database/NoTeTable'
 @Component
 export default struct note_homepage {
 
+  // 字体大小
+  @State fontSize : number = 0
+  // 应用风格
+  @State appStyle : number = 0
+
+
   // 路径栈
    pathStack: NavPathStack = AppStorage.get("PathStack") as NavPathStack
 
@@ -168,6 +174,17 @@ export default struct note_homepage {
     })
   }
 
+  // 跳转设置页面
+  getSetting(){
+    this.pathStack.pushPathByName("Setting",{
+      fontSize:this.fontSize,
+      appStyle:this.appStyle,
+      order:this.order===true?1:0
+    },()=>{
+
+    })
+  }
+
   // 删除按钮
   @Builder
   getListEnd(item:NoteDataModel){
@@ -206,7 +223,8 @@ export default struct note_homepage {
                 Image($r("app.media.Setting"))
                   .width(32)
                   .onClick(()=>{
-                    this.pathStack.pushPathByName("Setting",null)
+                    // 跳转设置页面
+                    this.getSetting()
                   })
               }.width("100%").height(32).alignItems(HorizontalAlign.End)
 
