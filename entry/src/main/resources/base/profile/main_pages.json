@@ -2,6 +2,7 @@
   "src": [
     "pages/Index",
     "pages/note",
-    "pages/note_homepage"
+    "pages/note_homepage",
+    "pages/FontSize"
   ]
 }

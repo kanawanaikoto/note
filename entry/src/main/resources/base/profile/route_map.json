@@ -10,6 +10,11 @@
       "name": "Setting",
       "pageSourceFile": "src/main/ets/pages/Settings.ets",
       "buildFunction": "getSetting"
+    },
+    {
+      "name": "FontSize",
+      "pageSourceFile": "src/main/ets/pages/FontSize.ets",
+      "buildFunction": "getFontSize"
     }
   ]
 }

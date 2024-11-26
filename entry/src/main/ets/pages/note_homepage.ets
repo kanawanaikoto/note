@@ -4,6 +4,9 @@ import CustomEditDialog from '../components/CustomEditDialog'
 import Item_NoTe from '../components/Item_NoTe'
 import NoteDataModel from '../model/NoteModel'
 import NoTeTable from '../database/NoTeTable'
+import PreferencesUtil from '../database/PreferencesUtil'
+import { collections } from '@kit.ArkTS';
+import { faceDetector } from '@kit.CoreVisionKit'
 
 @Entry
 @Component
@@ -12,8 +15,7 @@ export default struct note_homepage {
   // 字体大小
   @State fontSize : number = 0
   // 应用风格
-  @State appStyle : number = 0
-
+  @State appStyle : number = 1
 
   // 路径栈
    pathStack: NavPathStack = AppStorage.get("PathStack") as NavPathStack
@@ -64,11 +66,19 @@ export default struct note_homepage {
 
   // 排序
   onOrderChanged() {
-    if (this.order) {
-      this.note = this.originNoteList.sort((a, b) => b.updateTime - a.updateTime)
+
+    if(this.order){
+      console.log("序:升序")
+      this.originNoteList=this.originNoteList.sort((a, b) => {
+        return a.updateTime - b.updateTime
+      })
     } else {
-      this.note = this.originNoteList.sort((a, b) => a.updateTime - b.updateTime)
+      console.log("序:降序")
+      this.originNoteList=this.originNoteList.sort((a, b) => {
+        return b.updateTime - a.updateTime
+      })
     }
+    this.note = this.originNoteList
   }
 
   // 关闭弹窗
@@ -105,10 +115,14 @@ export default struct note_homepage {
 
   // 编辑弹窗
   onNoteEdit = (note: NoteDataModel) => {
-     this.getId(note)
-    // this.isEdit = true
 
-    this.getNote(note)
+    this.getId(note)
+    if(this.appStyle==1){
+      this.isEdit = true
+    }
+    else {
+      this.getNote(note)
+    }
 
   }
   // 删除
@@ -144,6 +158,18 @@ export default struct note_homepage {
     this.searchText = ""
     this.addNote = ""
     this.editNote = ""
+    // 初始化排序
+    PreferencesUtil.getChangeSort().then((value) => {
+      this.order = (value as number) === 1 ? true:false;
+    })
+    // 初始化字体大小
+    PreferencesUtil.getChangeFontSize().then((value) => {
+      this.fontSize = value as number;
+    })
+    // 初始化应用风格
+    PreferencesUtil.getChangeStyle().then((value) => {
+      this.appStyle = value as number;
+    })
 
     this.NoteTable.getRadState(() => {
       this.NoteTable.query((date: NoteDataModel[]) => {
@@ -158,6 +184,7 @@ export default struct note_homepage {
   getNote(note: NoteDataModel){
 
     this.pathStack.pushPathByName('Note',note, (popInfo) => {
+      console.log("114514")
 //      console.log('Pop page name is: ' + popInfo.info.name + ', result: ' + JSON.stringify(popInfo.result))
       if(popInfo.result){
 
@@ -175,12 +202,14 @@ export default struct note_homepage {
 
   // 跳转设置页面
   getSetting(){
-    this.pathStack.pushPathByName("Setting",{
-      fontSize:this.fontSize,
-      appStyle:this.appStyle,
-      order:this.order===true?1:0
-    },()=>{
-
+    this.pathStack.pushPathByName("Setting",{},(popInfo)=>{
+      console.log("114514")
+      // PreferencesUtil.getChangeSort().then((value) => {
+      //   console.log("114514")
+      //   this.order = (value as number) === 1 ? true:false;
+      // })
+      this.order = popInfo.result['order'] === 1 ? true:false;
+      this.appStyle = popInfo.result['appStyle']
     })
   }
 
@@ -298,7 +327,10 @@ export default struct note_homepage {
           // 添加逻辑
           // this.isAdd = true
           console.log("add")
-          this.getNote(new NoteDataModel(-1, Date.now(), ""))
+          if(this.appStyle==2){
+            this.getNote(new NoteDataModel(-1, Date.now(), ""))
+          }
+          else this.isAdd = true
         })
       }
       .height('100%')

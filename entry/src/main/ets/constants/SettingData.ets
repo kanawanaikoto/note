@@ -28,5 +28,25 @@ export default class SettingData {
   // 默认字体大小常量
   static readonly SET_SIZE_DEFAULT: number = 16;
 
-  static readonly APP_SORT = 1;
+  // 应用排序的键名常量
+  static readonly APP_SORT: number = 1;
+
+  static readonly APP_STYLE: number = 1;
+
+  // 超大号字体大小常量
+  static readonly SET_SIZE_EXTRA_LARGE: number = 20;
+
+  // 巨大号字体大小常量
+  static readonly SET_SIZE_HUGE: number = 24;
+
+  // 滑动条最小值常量
+  static readonly SET_SLIDER_MIN: number = 14;
+
+  // 滑动条最大值常量
+  static readonly SET_SLIDER_MAX: number = 22;
+
+  // 滑动条步长常量
+  static readonly SET_SLIDER_STEP: number = 2;
+
+
 }

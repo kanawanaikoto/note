@@ -42,7 +42,7 @@ export class PreferencesUtil {
    * @param fontSize 默认字体大小
    */
   saveDefaultFontSize(fontSize: number) {
-    this.saveValue(KEY_APP_FONT_SIZE, fontSize);
+    this.savePreferences(KEY_APP_FONT_SIZE, fontSize);
   }
 
   /**
@@ -73,7 +73,7 @@ export class PreferencesUtil {
    * @param style 默认风格
    */
   saveDefaultStyle(style: number) {
-    this.saveValue(KEY_APP_STYLE, style);
+    this.savePreferences(KEY_APP_STYLE, style);
   }
 
   /**
@@ -104,7 +104,7 @@ export class PreferencesUtil {
    * @param color 默认颜色
    */
   saveDefaultColor(color: string) {
-    this.saveValue(KEY_APP_COLOR, color);
+    this.savePreferences(KEY_APP_COLOR, color);
   }
 
   /**
@@ -135,14 +135,14 @@ export class PreferencesUtil {
    * @param sort 默认排序
    */
   saveDefaultSort(sort: number) {
-    this.saveValue(KEY_APP_SORT, sort);
+    this.savePreferences(KEY_APP_SORT, sort);
   }
 
   /**
    * 保存更改后的排序到 Preferences 中
    * @param sort 更改后的排序
    */
-  saveChangeSort(sort: string) {
+  saveChangeSort(sort: number) {
     this.saveValue(KEY_APP_SORT, sort);
   }
 
@@ -174,6 +174,30 @@ export class PreferencesUtil {
       preferences.flush();
     }).catch((err: Error) => {
       Logger.error(TAG, 'put the preferences failed, err: ' + err);
+    });
+  }
+
+  savePreferences(key: string, value: string | number | boolean){
+    // 从全局上下文中获取获取 Preferences 实例的函数
+    let getFontPreferences: Function = GlobalContext.getContext().getObject('getPreferences') as Function;
+
+    // 获取 Preferences 实例并操作
+    getFontPreferences().then((preferences: dataPreferences.Preferences) => {
+      // 检查设置是否存在
+      preferences.has(key).then(async (isExist: boolean) => {
+
+        // 如果设置不存在，则保存默认
+        if (!isExist) {
+          await preferences.put(key, value);
+          preferences.flush();
+        }
+      }).catch((err: Error) => {
+        // 记录错误日志
+        Logger.error(TAG, 'Has the value failed with err: ' + err);
+      });
+    }).catch((err: Error) => {
+      // 记录错误日志
+      Logger.error(TAG, 'Get the preferences failed, err: ' + err);
     });
   }
 
