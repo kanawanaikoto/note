@@ -2,6 +2,7 @@ import { Task } from '../model/ToDoModels';
 import Item_ToDoList from '../components/Item_ToDoList'
 import CustomAddDialog from '../components/CustomAddDialog';
 import ToDoTable from "../database/ToDoTable"
+import SearchBar from '../components/components_search';
 
 // 定义ToDoList组件，用于展示和管理待办事项列表
 @Entry
@@ -10,10 +11,38 @@ export default struct ToDoList{
   // 初始化待办事项列表模型
   private todotable: ToDoTable = new ToDoTable()
   // 原始待办事项列表数据
-  @State OriginTodoList: Task[] = []
+  private OriginTodoList: Task[] = []
+  @State TodoListStorage: Task[] = []
+
+  pathStack: NavPathStack = AppStorage.get("PathStack") as NavPathStack
+
+  // 搜索框内容
+  @State @Watch('onsearchText') searchText: string = ""
+
+  // 搜索框内容改变
+  onsearchText() {
+    if (this.searchText.length === 0) {
+      this.TodoListStorage = this.OriginTodoList
+    } else {
+      let result: Task[] = []
+
+      for (const todoItem of this.OriginTodoList) {
+        if (todoItem.task.includes(this.searchText)) {
+          result.push(todoItem)
+        }
+      }
+
+      this.TodoListStorage = result
+
+    }
+  }
+
+  clean = ()=>{
+    this.searchText = ""
+  }
 
   // 获取待办事项列表数据
-  //@State TodoList: Task[] = []
+  //@State TodoListStorage: Task[] = []
 
   // 编辑待办事项的状态
   @State isEditDone: boolean = false
@@ -30,6 +59,7 @@ export default struct ToDoList{
     this.todotable.insertData(task, (id: number)=>{
       task.id = id
       this.OriginTodoList.push(task)
+      this.TodoListStorage = this.OriginTodoList
     })
     // let i = 0
     // for(i=0;i<this.todo.length;i++)
@@ -45,6 +75,7 @@ export default struct ToDoList{
     }
     this.todotable.updateData(this.OriginTodoList[i], ()=>{
       this.OriginTodoList[i].task = data
+      this.TodoListStorage = this.OriginTodoList
     })
   }
 
@@ -58,6 +89,7 @@ export default struct ToDoList{
     }
     this.todotable.deleteData(this.OriginTodoList[i], ()=>{
       this.OriginTodoList.splice(i, 1)
+      this.TodoListStorage = this.OriginTodoList
     })
   }
   // 构建列表项末尾的操作按钮
@@ -75,7 +107,7 @@ export default struct ToDoList{
       .onClick(() => {
         // 删除待办事项
         this.deleteDataByIndex(item.id)
-        //this.TodoList = this.OriginTodoList
+        //this.TodoListStorage = this.OriginTodoList
       })
     }.padding("4vp").justifyContent(FlexAlign.SpaceEvenly)
   }
@@ -85,6 +117,7 @@ export default struct ToDoList{
     this.todotable.getRadState(()=>{
       this.todotable.query((data: Task[])=>{
         this.OriginTodoList = data
+        this.TodoListStorage = this.OriginTodoList
       })
     })
   }
@@ -97,7 +130,7 @@ export default struct ToDoList{
   // 创建（添加）新的待办事项
   onCreate = ()=>{
     this.addData(this.editContent)
-    //this.TodoList = this.OriginTodoList
+    //this.TodoListStorage = this.OriginTodoList
     this.isEditDone = false
   }
 
@@ -105,23 +138,36 @@ export default struct ToDoList{
   build() {
     Stack({alignContent: Alignment.BottomEnd}) {
       // 主要内容
-      Column({ space: 6 }) {
+      Column({ space: 10 }) {
+      Column({ space: 8 }) {
         // 顶部标题
         Column() {
           Column() {
             Blank()
-            Image($r("app.media.Setting")).width(32)
+            Image($r("app.media.Setting"))
+              .width(32)
+              .onClick(() => {
+                this.pathStack.pushPathByName("Setting", null)
+              })
           }.width("100%").height(32).alignItems(HorizontalAlign.End)
+
           Text("待办").fontSize(40).fontColor("#2c2c2c")
-        }.backgroundColor(Color.White)
-         .width('100%')
-         .height('15%')
-         .alignItems(HorizontalAlign.Start)
-         .padding(16)
+            .padding({bottom: 10,top:3})
+          SearchBar({ searchText: this.searchText, clean: this.clean })// 搜索框
+            .width('100%')
+        }
+        .backgroundColor(Color.White)
+        .width('100%')
+        .height(165)
+        .alignItems(HorizontalAlign.Start)
+        .padding(16)
+      }.height('23%')
+      .backgroundColor(Color.White)
+      .width('100%')
         // 待办事项列表
         Column({ space: 0 }){
           List({ space: 6 }) {
-            ForEach(this.OriginTodoList, (item: Task) => {
+            ForEach(this.TodoListStorage, (item: Task) => {
               ListItem() {
                 Item_ToDoList({ task: item, IndexOfListChanging: this.ifListEditing })
               }.height(60)
@@ -174,4 +220,8 @@ export default struct ToDoList{
       this.ifListEditing = -1
     })
   }
+}
+
+function Input() {
+  throw new Error('Function not implemented.');
 }

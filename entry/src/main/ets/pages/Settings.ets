@@ -1,5 +1,3 @@
-import { promptAction } from "@kit.ArkUI"
-import PreferencesUtil from "../database/PreferencesUtil";
 
 @Builder
 export function getSetting() {
@@ -34,7 +32,7 @@ struct SettingsPage {
   @State fontSize : number = 0
   // 应用风格
   @State appStyle : number = 0
-  
+
   build() {
     NavDestination() {
       Column({ space: 8}) {
@@ -138,6 +136,7 @@ struct Item{
   @State title: string = ""
   @Link description: number
   @State icon: Resource = $r("app.media.right")
+
   build() {
     Row() {
       Text(this.title)
