@@ -3,11 +3,15 @@ import Item_ToDoList from '../components/Item_ToDoList'
 import CustomAddDialog from '../components/CustomAddDialog';
 import ToDoTable from "../database/ToDoTable"
 import SearchBar from '../components/components_search';
+import PreferencesUtil from '../database/PreferencesUtil';
 
 // 定义ToDoList组件，用于展示和管理待办事项列表
 @Entry
 @Component
 export default struct ToDoList{
+
+  @State fontSize: number = 0
+
   // 初始化待办事项列表模型
   private todotable: ToDoTable = new ToDoTable()
   // 原始待办事项列表数据
@@ -114,6 +118,9 @@ export default struct ToDoList{
 
   // 组件加载时执行
   aboutToAppear(): void {
+    PreferencesUtil.getChangeFontSize().then((value) => {
+      this.fontSize = value as number;
+    })
     this.todotable.getRadState(()=>{
       this.todotable.query((data: Task[])=>{
         this.OriginTodoList = data
@@ -134,6 +141,19 @@ export default struct ToDoList{
     this.isEditDone = false
   }
 
+  // 跳转设置页面
+  getSetting(){
+    this.pathStack.pushPathByName("Setting",{},(popInfo)=>{
+      console.log("114514")
+      // PreferencesUtil.getChangeSort().then((value) => {
+      //   console.log("114514")
+      //   this.order = (value as number) === 1 ? true:false;
+      // })
+
+      this.fontSize = popInfo.result['fontSize']
+    })
+  }
+
   // 构建ToDoList组件
   build() {
     Stack({alignContent: Alignment.BottomEnd}) {
@@ -147,7 +167,7 @@ export default struct ToDoList{
             Image($r("app.media.Setting"))
               .width(32)
               .onClick(() => {
-                this.pathStack.pushPathByName("Setting", null)
+                this.getSetting()
               })
           }.width("100%").height(32).alignItems(HorizontalAlign.End)
 
@@ -169,7 +189,7 @@ export default struct ToDoList{
           List({ space: 6 }) {
             ForEach(this.TodoListStorage, (item: Task) => {
               ListItem() {
-                Item_ToDoList({ task: item, IndexOfListChanging: this.ifListEditing })
+                Item_ToDoList({ task: item, IndexOfListChanging: this.ifListEditing,fontSize:this.fontSize })
               }.height(60)
               .swipeAction({end:{
                 builder:()=> {

@@ -2,14 +2,22 @@
 import note_homepage from './note_homepage'
 import ToDoList from './ToDoList'
 import { Task, TodoModels} from '../model/ToDoModels';
+import PreferencesUtil from '../database/PreferencesUtil';
 
 @Entry
 @Component
 struct Index {
 
-
+  @State fontSize: number = 16
   // 当前页面索引状态，用于标识当前选中的页面
   @State index: number = 0
+
+  aboutToDisappear(): void {
+    PreferencesUtil.getChangeFontSize().then((value) => {
+      this.fontSize = value as number;
+      console.log("fontSize: " + this.fontSize);
+    })
+  }
 
   // 自定义构建器，用于创建导航工具栏
   @Builder NavigationToolbar() {
@@ -19,7 +27,7 @@ struct Index {
         Image(this.index == 1 ?$r("app.media.note_f"):$r("app.media.note"))
           .size({ width: 25, height: 25 })
         Text('便签')
-          .fontSize(16)
+          .fontSize(this.fontSize)
           .fontColor(this.index == 0 ? "#2c2c2c":"#cdcdcd")
       }
       .alignItems(HorizontalAlign.Center)
@@ -34,7 +42,7 @@ struct Index {
         Image(this.index == 0 ? $r("app.media.to_do_f"):$r("app.media.to_do"))
           .size({ width: 25, height: 25 })
         Text('待办')
-          .fontSize(16)
+          .fontSize(this.fontSize)
           .fontColor(this.index == 1 ? "#2c2c2c":"#cdcdcd")
       }
       .alignItems(HorizontalAlign.Center)

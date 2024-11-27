@@ -46,7 +46,8 @@ struct SettingsPage {
           .onClick(() => {
             this.pathStack.pop({
               order:this.order,
-              appStyle:this.appStyle
+              appStyle:this.appStyle,
+              fontSize:this.fontSize
             })
           })
 
@@ -62,7 +63,7 @@ struct SettingsPage {
         .width("100%")
         .padding({ left: 16 })
 
-        Item({ title: "主题", description: this.appStyle, icon: $r("app.media.right_2") })
+        Item({ title: "主题", description: this.appStyle, icon: $r("app.media.right_2"),fontSize:this.fontSize })
           .onClick(() => {
             promptAction.showToast({
               message: '功能开发中',
@@ -70,18 +71,7 @@ struct SettingsPage {
               bottom: 75
             })
           })
-        Item({ title: "字体大小", description: this.fontSize, icon: $r("app.media.right_2") })
-          .onClick(() => {
-            // promptAction.showToast({
-            //   message: '功能开发中',
-            //   duration: 1600,
-            //   bottom: 75
-            // })
-            this.pathStack.pushPathByName("FontSize", {},(fontSize)=>{
-              this.fontSize = fontSize.result as number;
-            })
-          })
-        Item({ title: "应用风格", description: this.appStyle, icon: $r("app.media.expand") })
+        Item({ title: "应用风格", description: this.appStyle, icon: $r("app.media.expand"),fontSize:this.fontSize })
           .bindMenu([
             {
               value: "弹窗模式",
@@ -98,7 +88,7 @@ struct SettingsPage {
               }
             }
           ])
-        Item({ title: "笔记排序", description: this.order, icon: $r("app.media.expand") })
+        Item({ title: "笔记排序", description: this.order, icon: $r("app.media.expand"),fontSize:this.fontSize })
           .bindMenu([
             {
               value: "按编辑时间升序",
@@ -115,6 +105,17 @@ struct SettingsPage {
               }
             }
           ])
+        Item({ title: "字体大小", description: this.fontSize, icon: $r("app.media.right_2"),fontSize:this.fontSize })
+          .onClick(() => {
+            // promptAction.showToast({
+            //   message: '功能开发中',
+            //   duration: 1600,
+            //   bottom: 75
+            // })
+            this.pathStack.pushPathByName("FontSize", {},(fontSize)=>{
+              this.fontSize = fontSize.result as number;
+            })
+          })
 
         Divider().color("#E0E0E0").height(1).margin({ top: 10, bottom: 10 })
         Blank() //占位
@@ -166,18 +167,19 @@ struct Item {
   @State title: string = ""
   @Link description: number
   @State icon: Resource = $r("app.media.right")
+  @Link fontSize: number
 
   build() {
     Row() {
       Text(this.title)
-        .fontSize(16)
+        .fontSize(this.fontSize)
         .height(50)
         .textAlign(TextAlign.Start)
         .padding({ left: 20 })
       Blank()
       Text(get(this.description, this.title))
         .fontColor('#c4aaafb1')//字体颜色
-        .fontSize(14)
+        .fontSize(this.fontSize*0.8)
         .height(50)
         .textAlign(TextAlign.Start)
         .padding({ left: 20 })

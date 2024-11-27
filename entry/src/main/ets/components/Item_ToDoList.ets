@@ -1,5 +1,5 @@
 import { Task } from '../model/ToDoModels';
-import ToDoList from '../pages/ToDoList';
+
 
 @Component
 export default struct Item_ToDoList{// 待办事项
@@ -7,6 +7,8 @@ export default struct Item_ToDoList{// 待办事项
   @ObjectLink task: Task
 
   @Link IndexOfListChanging: number
+
+  @Link fontSize: number
 
   @Builder
   CreateIcon(icon:Resource){ // 图标
@@ -51,6 +53,7 @@ export default struct Item_ToDoList{// 待办事项
               placeholder: this.task.task,
               text: this.task.task
             })
+              .fontSize(this.fontSize)
               .onChange((strIn: string) => {
                 this.task.task = strIn
               })
@@ -66,7 +69,7 @@ export default struct Item_ToDoList{// 待办事项
             Text(this.task.task)
               .decoration({ type: this.task.complete===1 ? TextDecorationType.LineThrough : TextDecorationType.None })// 删除线
               .opacity(this.task.complete===1 ? 0.5 : 1)// 透明度
-              .fontSize(20)// 字体大小
+              .fontSize(this.fontSize)// 字体大小
               .fontWeight(500) // 加粗
           }
           .width('70%')

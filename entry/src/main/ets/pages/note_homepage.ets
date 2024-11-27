@@ -210,6 +210,7 @@ export default struct note_homepage {
       // })
       this.order = popInfo.result['order'] === 1 ? true:false;
       this.appStyle = popInfo.result['appStyle']
+      this.fontSize = popInfo.result['fontSize']
     })
   }
 
@@ -275,7 +276,7 @@ export default struct note_homepage {
             List({ space: 6 }) {
               ForEach(this.note, (item: NoteDataModel) => {
                 ListItem() {
-                  Item_NoTe({ note: item, onNoteClick: this.onNoteEdit })
+                  Item_NoTe({ note: item, onNoteClick: this.onNoteEdit,fontSize:this.fontSize })
                 }
                 .swipeAction({
                   end: {

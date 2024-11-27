@@ -1,5 +1,6 @@
 import NoteDataModel from "../model/NoteModel"
 import getFormatTime  from '../function/FormatTime'
+import PreferencesUtil from "../database/PreferencesUtil"
 
 
 @Component
@@ -7,7 +8,16 @@ export default struct Item_NoTe {
 
   @ObjectLink note: NoteDataModel
 
+  @Link fontSize: number
+
   onNoteClick : (note: NoteDataModel) => void = ()=>{}
+
+  // aboutToAppear(): void {
+  //   PreferencesUtil.getChangeFontSize().then((value) => {
+  //     this.fontSize = value as number;
+  //     console.log("fontSize: " + this.fontSize);
+  //   })
+  // }
 
   build() {
     Row(){
@@ -34,13 +44,13 @@ export default struct Item_NoTe {
             // 时间
             Row({ space: 10 }) {
               Text(getFormatTime(this.note.updateTime).range)
-                .fontSize(12)
+                .fontSize(this.fontSize*0.8)
                 .fontColor('#ff303030')
               Text(getFormatTime(this.note.updateTime).formatDate)
-                .fontSize(12)
+                .fontSize(this.fontSize*0.8)
                 .fontColor('#ff303030')
               Text(getFormatTime(this.note.updateTime).formatTime)
-                .fontSize(12)
+                .fontSize(this.fontSize*0.8)
                 .fontColor('#ff303030')
             }
             .margin({ left: 10 })
@@ -58,6 +68,7 @@ export default struct Item_NoTe {
             Column() {
               Text(this.note.content)
                 .fontColor('#808080')
+                .fontSize(this.fontSize)
                 .maxLines(2)
                 .margin({ right: 10 })
             }
@@ -84,13 +95,4 @@ export default struct Item_NoTe {
   }
 }
 
-@Preview
-@Component
-struct Item_NoTePreview {
-  @State note: NoteDataModel = new NoteDataModel(1, 1732203931481, "hello world")
-  build() {
-    Item_NoTe({
-      note: this.note
-    })
-  }
-}
+
