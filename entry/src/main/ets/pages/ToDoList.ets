@@ -113,7 +113,7 @@ export default struct ToDoList{
         this.deleteDataByIndex(item.id)
         //this.TodoListStorage = this.OriginTodoList
       })
-    }.padding("4vp").justifyContent(FlexAlign.SpaceEvenly)
+    }.padding($r('sys.float.corner_radius_level2')).justifyContent(FlexAlign.SpaceEvenly)
   }
 
   // 组件加载时执行
