@@ -54,9 +54,9 @@ struct Index {
       })
 
     }
-    .backgroundColor("#FFFF")
+    .backgroundColor($r('sys.color.ohos_id_color_background'))
     .width('100%')
-    .height(50)
+    .height(60)
     .alignItems(VerticalAlign.Center)
 
   }
@@ -86,5 +86,7 @@ struct Index {
     .toolbarConfiguration(this.NavigationToolbar())// 自定义导航工具栏
     .size({ width: '100%', height: '100%' })
     .backgroundColor($r('sys.color.ohos_id_color_background'))
+    .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP])
+
   }
 }

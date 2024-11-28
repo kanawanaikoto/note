@@ -70,6 +70,7 @@ struct CodeGenieNotepad {
           text: this.note.content
         }).height('100%')
           .width('100%')
+          .defaultFocus(true)
           .onChange((value) => { // 更新数据
             this.note.content = value
           })

@@ -215,7 +215,10 @@ export default struct ToDoList{
           edit: this.editContent,
           onClose: this.onClose,
           onCreate: this.onCreate
-        }).zIndex(4)
+        })
+          .height('100%')
+          .width('100%')
+          .zIndex(4)
       }
 
       // 右下角的圆形加号按钮
@@ -236,6 +239,7 @@ export default struct ToDoList{
         this.editContent = ""
       })
     }
+    .height('100%')
     .onClick(()=>{
       this.ifListEditing = -1
     })

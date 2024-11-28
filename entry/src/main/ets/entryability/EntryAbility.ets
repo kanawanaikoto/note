@@ -4,6 +4,7 @@ import { window } from '@kit.ArkUI';
 import { GlobalContext } from '../utils/GlobalContext';
 import PreferencesUtil from '../database/PreferencesUtil';
 import SettingData from '../constants/SettingData';
+import { KeyboardAvoidMode } from '@kit.ArkUI';
 
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
@@ -24,7 +25,17 @@ export default class EntryAbility extends UIAbility {
     // Main window is created, set main page for this ability
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');// 初始化页面
 
+    // windowStage.getMainWindow().then((window) => {
+    //   window.setWindowLayoutFullScreen(true)
+    // })
+
+
     windowStage.loadContent('pages/Index', (err) => {
+
+      // let keyboardAvoidMode = windowStage.getMainWindowSync().getUIContext().getKeyboardAvoidMode();
+      // // 设置虚拟键盘抬起时压缩页面大小为减去键盘的高度
+      // windowStage.getMainWindowSync().getUIContext().setKeyboardAvoidMode(KeyboardAvoidMode.RESIZE);
+
       if (err.code) {
         hilog.error(0x0000, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err) ?? '');
         return;

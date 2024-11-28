@@ -301,7 +301,10 @@ export default struct note_homepage {
             edit: this.addNote,
             onClose: this.onClose,
             onCreate: this.onCreate
-          }).zIndex(4)
+          })
+            .height('100%')
+            .width('100%')
+            .zIndex(4)
         }
 
         // 编辑弹窗
@@ -311,7 +314,10 @@ export default struct note_homepage {
             onClose: this.onClose,
             onDelete: this.onDelete,
             onCreate: this.onEdit
-          }).zIndex(4)
+          })
+            .height('100%')
+            .width('100%')
+            .zIndex(4)
         }
 
         // 右下角的圆形加号按钮
