@@ -11,7 +11,7 @@ export default class EntryAbility extends UIAbility {
     GlobalContext.getContext().setObject('abilityWant',want)
     PreferencesUtil.createPreferences(this.context)
     PreferencesUtil.saveDefaultFontSize(SettingData.SET_SIZE_NORMAL)
-    //PreferencesUtil.saveDefaultColor('')
+    PreferencesUtil.saveDefaultColor(SettingData.APP_COLOR)
     PreferencesUtil.saveDefaultStyle(SettingData.APP_STYLE)
     PreferencesUtil.saveDefaultSort(SettingData.APP_SORT)
   }

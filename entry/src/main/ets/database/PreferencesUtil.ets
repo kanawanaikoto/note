@@ -103,7 +103,7 @@ export class PreferencesUtil {
    * 保存默认颜色到 Preferences 中
    * @param color 默认颜色
    */
-  saveDefaultColor(color: string) {
+  saveDefaultColor(color: number) {
     this.savePreferences(KEY_APP_COLOR, color);
   }
 
@@ -111,7 +111,7 @@ export class PreferencesUtil {
    * 保存更改后的颜色到 Preferences 中
    * @param color 更改后的颜色
    */
-  saveChangeColor(color: string) {
+  saveChangeColor(color: number) {
     this.saveValue(KEY_APP_COLOR, color);
   }
 
@@ -119,8 +119,8 @@ export class PreferencesUtil {
    * 获取更改后的颜色
    * @returns 更改后的颜色
    */
-  async getChangeColor(): Promise<string> {
-    return this.getValue(KEY_APP_COLOR, '');
+  async getChangeColor(): Promise<number> {
+    return this.getValue(KEY_APP_COLOR, 0);
   }
 
   /**

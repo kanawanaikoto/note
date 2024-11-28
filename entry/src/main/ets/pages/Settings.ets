@@ -31,6 +31,9 @@ struct SettingsPage {
     PreferencesUtil.getChangeStyle().then((value) => {
       this.appStyle = value as number;
     })
+    PreferencesUtil.getChangeColor().then((value) => {
+      this.theme = value as number;
+    })
   }
 
   build() {
@@ -54,7 +57,7 @@ struct SettingsPage {
           Blank()
           Text("设置")
             .fontSize(25)
-            .fontColor('#000000')
+            .fontColor($r('sys.color.black'))
             .fontWeight(FontWeight.Bold)
             .margin({ right: 25 })
           Blank()
@@ -63,7 +66,7 @@ struct SettingsPage {
         .width("100%")
         .padding({ left: 16 })
 
-        Item({ title: "主题", description: this.appStyle, icon: $r("app.media.right_2"),fontSize:this.fontSize })
+        Item({ title: "主题", description: this.theme, icon: $r("app.media.right_2"),fontSize:this.fontSize })
           .onClick(() => {
             promptAction.showToast({
               message: '功能开发中',
@@ -71,6 +74,29 @@ struct SettingsPage {
               bottom: 75
             })
           })
+          .bindMenu([
+            {
+              value: "浅色模式",
+              action: () => {
+                this.theme = 1
+                PreferencesUtil.saveChangeColor(this.theme)
+              }
+            },
+            {
+              value: "暗黑模式",
+              action: () => {
+                this.theme = 2
+                PreferencesUtil.saveChangeColor(this.theme)
+              }
+            },
+            {
+              value: "跟随系统",
+              action: () => {
+                this.theme = 0
+                PreferencesUtil.saveChangeColor(this.theme)
+              }
+            }
+          ])
         Item({ title: "应用风格", description: this.appStyle, icon: $r("app.media.expand"),fontSize:this.fontSize })
           .bindMenu([
             {
@@ -151,7 +177,7 @@ struct SettingsPage {
       .padding({ right: 20 }) //外边距
 
     }
-    .backgroundColor("#F1F3F5")
+    .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
     //.title("设置")
     .hideTitleBar(true) //隐藏标题栏
     .height("100%")
@@ -193,7 +219,7 @@ struct Item {
     }
     .margin(10)
     .width('100%')
-    .backgroundColor("#FFFFFF")
+    .backgroundColor($r('sys.color.comp_background_list_card'))
     .borderRadius(8)
   }
 }
@@ -201,6 +227,8 @@ struct Item {
 
 function get(description: number, title: string): string {
   switch (title) {
+    case "主题":
+      return description == 1 ? "浅色模式" : description == 2 ? "暗黑模式" : "跟随系统"
     case "应用风格":
       return description == 1 ? "弹窗模式" : "页面模式"
     case "笔记排序":

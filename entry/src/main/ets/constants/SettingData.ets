@@ -33,6 +33,8 @@ export default class SettingData {
 
   static readonly APP_STYLE: number = 1;
 
+  static readonly APP_COLOR: number = 0;
+
   // 超大号字体大小常量
   static readonly SET_SIZE_EXTRA_LARGE: number = 20;
 

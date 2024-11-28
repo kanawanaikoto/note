@@ -24,8 +24,7 @@ export default struct Item_NoTe {
       Stack() {
         Row() {
           // 左侧阴影
-          Column() {
-          }
+          Column()
           .width(26)
           .height(90)
           .linearGradient({

@@ -1,0 +1,12 @@
+{
+  "color": [
+    {
+      "name": "bg_color",
+      "value": "#000000"
+    },
+    {
+      "name": "txt_color",
+      "value": "#c6c6c6"
+    }
+  ]
+}

@@ -72,7 +72,7 @@ struct FontSize {
     .hideTitleBar(true) //隐藏标题栏
     .height("100%")
     .width("100%")
-    .backgroundColor("#F1F3F5")
+    .backgroundColor($r('sys.color.comp_background_list_card'))
   }
 }
 
@@ -89,12 +89,12 @@ struct SliderLayout {
         // 显示当前字体大小的文本描述
         Text(getfontSize(this.changeFontSize))
           .fontSize(14)
-          .fontColor("#182431")
+          .fontColor($r('sys.color.font_primary'))
         // 添加滑动条组件，用于调整字体大小
         Row() {
           // 添加小写的'a'字符
           Text('a')
-            .fontColor("#182431")
+            .fontColor($r('sys.color.font_primary'))
             .fontSize(20)
             .fontWeight(FontWeight.Medium)
             .textAlign(TextAlign.End)
@@ -125,14 +125,15 @@ struct SliderLayout {
 
           // 添加大写的'A'字符
           Text('A')
-            .fontColor('#182431')
+            .fontColor($r('sys.color.font_primary'))
             .fontSize("24fp")
             .fontWeight(FontWeight.Bold)
             .width('12.5%')
             .padding({ left: 8 })
         }
+
       }
-      .backgroundColor(Color.White)
+      .backgroundColor($r('sys.color.comp_background_list_card'))
       .borderRadius(24)
       .width('93.3%')
       .padding({ top: 16, bottom: 21 })
