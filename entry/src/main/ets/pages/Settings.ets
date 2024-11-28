@@ -1,5 +1,7 @@
 import { promptAction } from "@kit.ArkUI";
 import PreferencesUtil from "../database/PreferencesUtil";
+import { setDarkColorMode, setLightColorMode, setAutoColorMode } from "../utils/ColorModeChangeFunctions";
+import { common } from "@kit.AbilityKit";
 
 @Builder
 export function getSetting() {
@@ -9,15 +11,28 @@ export function getSetting() {
 @Entry
 @Component
 struct SettingsPage {
+
+  private context: common.UIAbilityContext = getContext(this) as common.UIAbilityContext;
+
   pathStack: NavPathStack = AppStorage.get("PathStack") as NavPathStack
   // 笔记排序
   @State order: number = 0
   // 主题
-  @State theme: number = 0
+  @State @Watch("PreferencesTheme") theme: number = 0
   // 字体大小
   @State fontSize: number = 0
   // 应用风格
   @State appStyle: number = 0
+
+  PreferencesTheme(){
+    if(this.theme == 0){
+      setAutoColorMode(this.context)
+    } else if(this.theme == 1){
+      setLightColorMode(this.context)
+    } else {
+      setDarkColorMode(this.context)
+    }
+  }
 
   // 页面加载
   aboutToAppear(): void {
@@ -67,13 +82,13 @@ struct SettingsPage {
         .padding({ left: 16 })
 
         Item({ title: "主题", description: this.theme, icon: $r("app.media.right_2"),fontSize:this.fontSize })
-          .onClick(() => {
-            promptAction.showToast({
-              message: '功能开发中',
-              duration: 1600,
-              bottom: 75
-            })
-          })
+          // .onClick(() => {
+          //   promptAction.showToast({
+          //     message: '功能开发中',
+          //     duration: 1600,
+          //     bottom: 75
+          //   })
+          // })
           .bindMenu([
             {
               value: "浅色模式",

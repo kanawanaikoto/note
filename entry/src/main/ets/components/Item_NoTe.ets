@@ -1,16 +1,14 @@
 import NoteDataModel from "../model/NoteModel"
-import getFormatTime  from '../function/FormatTime'
+import getFormatTime from '../function/FormatTime'
 import PreferencesUtil from "../database/PreferencesUtil"
 
 
 @Component
 export default struct Item_NoTe {
-
   @ObjectLink note: NoteDataModel
-
   @Link fontSize: number
-
-  onNoteClick : (note: NoteDataModel) => void = ()=>{}
+  onNoteClick: (note: NoteDataModel) => void = () => {
+  }
 
   // aboutToAppear(): void {
   //   PreferencesUtil.getChangeFontSize().then((value) => {
@@ -20,18 +18,18 @@ export default struct Item_NoTe {
   // }
 
   build() {
-    Row(){
+    Row() {
       Stack() {
         Row() {
           // 左侧阴影
           Column()
-          .width(26)
-          .height(90)
-          .linearGradient({
-            direction: GradientDirection.Bottom,
-            colors: [['#d9d9d9', 0.5], ['#d9d9d9', 0.1]]
-          })
-          .borderRadius({ topLeft: 4, bottomLeft: 4 })
+            .width(26)
+            .height(90)
+            .linearGradient({
+              direction: GradientDirection.Bottom,
+              colors: [['#d9d9d9', 0.5], ['#d9d9d9', 0.1]]
+            })
+            .borderRadius({ topLeft: 4, bottomLeft: 4 })
           Divider()
             .vertical(true)
             .width(1)
@@ -43,13 +41,13 @@ export default struct Item_NoTe {
             // 时间
             Row({ space: 10 }) {
               Text(getFormatTime(this.note.updateTime).range)
-                .fontSize(this.fontSize*0.8)
+                .fontSize(this.fontSize * 0.8)
                 .fontColor('#ff303030')
               Text(getFormatTime(this.note.updateTime).formatDate)
-                .fontSize(this.fontSize*0.8)
+                .fontSize(this.fontSize * 0.8)
                 .fontColor('#ff303030')
               Text(getFormatTime(this.note.updateTime).formatTime)
-                .fontSize(this.fontSize*0.8)
+                .fontSize(this.fontSize * 0.8)
                 .fontColor('#ff303030')
             }
             .margin({ left: 10 })
@@ -84,13 +82,13 @@ export default struct Item_NoTe {
           .borderRadius({ topRight: 4, bottomRight: 4 })
           .margin({ right: 27 })
         }
-       }
-       .onClick(()=>{
-         console.log('Item_NoTe onClick')
-         this.onNoteClick(this.note)
-       })
+      }
+      .onClick(() => {
+        console.log('Item_NoTe onClick')
+        this.onNoteClick(this.note)
+      })
     }
-    .padding({ left: 20,right: 20})
+    .padding({ left: 20, right: 20 })
   }
 }
 

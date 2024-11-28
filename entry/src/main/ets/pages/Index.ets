@@ -22,13 +22,14 @@ struct Index {
   // 自定义构建器，用于创建导航工具栏
   @Builder NavigationToolbar() {
     Row() {
+
       // 便签页面的图标和文字
       Column() {
         Image(this.index == 1 ?$r("app.media.note_f"):$r("app.media.note"))
           .size({ width: 25, height: 25 })
         Text('便签')
           .fontSize(this.fontSize)
-          .fontColor(this.index == 0 ? "#2c2c2c":"#cdcdcd")
+          .fontColor(this.index == 0 ? $r('sys.color.ohos_id_color_text_primary'):"#cdcdcd")
       }
       .alignItems(HorizontalAlign.Center)
       .height('100%')
@@ -43,7 +44,7 @@ struct Index {
           .size({ width: 25, height: 25 })
         Text('待办')
           .fontSize(this.fontSize)
-          .fontColor(this.index == 1 ? "#2c2c2c":"#cdcdcd")
+          .fontColor(this.index == 1 ? $r('sys.color.ohos_id_color_text_primary'):"#cdcdcd")
       }
       .alignItems(HorizontalAlign.Center)
       .height('100%')
@@ -53,6 +54,7 @@ struct Index {
       })
 
     }
+    .backgroundColor("#FFFF")
     .width('100%')
     .height(50)
     .alignItems(VerticalAlign.Center)
@@ -72,16 +74,17 @@ struct Index {
     Navigation(this.pathStack) {
       Column() {
         if(this.index == 0){
-          note_homepage().height('100%')
+          note_homepage().height('')
         }else{
           ToDoList().height('100%')
         }
       }.width('100%').height('100%')
     }
     .mode(NavigationMode.Stack)
-    .titleMode(NavigationTitleMode.Free) // 自定义标题
+    .titleMode(NavigationTitleMode.Free)
     .hideBackButton(true) // 隐藏返回按钮
-    .toolbarConfiguration(this.NavigationToolbar())
+    .toolbarConfiguration(this.NavigationToolbar())// 自定义导航工具栏
     .size({ width: '100%', height: '100%' })
+    .backgroundColor($r('sys.color.ohos_id_color_background'))
   }
 }

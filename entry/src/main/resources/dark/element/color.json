@@ -7,6 +7,10 @@
     {
       "name": "txt_color",
       "value": "#c6c6c6"
+    },
+    {
+      "name": "txt_color_2",
+      "value": "#F1F3F5"
     }
   ]
 }

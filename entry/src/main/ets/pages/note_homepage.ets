@@ -290,7 +290,8 @@ export default struct note_homepage {
             }.alignListItem(ListItemAlign.Center) // 元素布局
             .height('100%')
           }.height('77%')
-        }.backgroundColor('#F1F3F5')
+        }
+        .backgroundColor('#F1F3F5')
         .width('100%')
         .height('100%')
 
