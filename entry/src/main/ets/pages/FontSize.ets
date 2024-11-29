@@ -47,7 +47,6 @@ struct FontSize {
           Blank()
           Text("字体大小")
             .fontSize(25)
-            .fontColor('#000000')
             .fontWeight(FontWeight.Bold)
             .margin({ right: 25 })
           Blank()
@@ -72,7 +71,7 @@ struct FontSize {
     .hideTitleBar(true) //隐藏标题栏
     .height("100%")
     .width("100%")
-    .backgroundColor($r('sys.color.comp_background_list_card'))
+    .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
   }
 }
 

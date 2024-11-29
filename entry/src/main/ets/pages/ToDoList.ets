@@ -169,6 +169,7 @@ export default struct ToDoList{
               .onClick(() => {
                 this.getSetting()
               })
+              .fillColor($r('app.color.some_icons'))
           }.width("100%").height(32).alignItems(HorizontalAlign.End)
 
           Text("待办").fontSize(40)
@@ -227,6 +228,7 @@ export default struct ToDoList{
         Image($r('app.media.push'))
           .width(50)
           .height(50)
+          .fillColor($r('app.color.some_icons'))
       }
       .width(50)  // 与图片宽度一致
       .height(50)  // 与图片高度一致

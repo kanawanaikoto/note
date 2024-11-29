@@ -82,7 +82,7 @@ struct SettingsPage {
         .width("100%")
         .padding({ left: 16 })
 
-        Item({ title: "主题", description: this.theme, icon: $r("app.media.right_2"),fontSize:this.fontSize })
+        Item({ title: "主题", description: this.theme, icon: $r("app.media.right"),fontSize:this.fontSize })
           // .onClick(() => {
           //   promptAction.showToast({
           //     message: '功能开发中',
@@ -147,7 +147,7 @@ struct SettingsPage {
               }
             }
           ])
-        Item({ title: "字体大小", description: this.fontSize, icon: $r("app.media.right_2"),fontSize:this.fontSize })
+        Item({ title: "字体大小", description: this.fontSize, icon: $r("app.media.right"),fontSize:this.fontSize })
           .onClick(() => {
             // promptAction.showToast({
             //   message: '功能开发中',
@@ -228,6 +228,7 @@ struct Item {
       Button() {
         Image(this.icon)
           .width(24)
+          .fillColor($r('app.color.some_icons'))
       }
       .margin({ right: 10 })
       //透明
