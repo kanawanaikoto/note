@@ -80,7 +80,7 @@ export default struct Item_ToDoList{// 待办事项
         }
       }
       .borderRadius(24) // 圆角
-      .backgroundColor($r('sys.color.ohos_id_color_sub_background')) // 背景色
+      .backgroundColor($r('sys.color.comp_background_list_card')) // 背景色
       .width("90%") // 宽度
       .height(60) // 高度
       .onClick(() => { //文本编辑

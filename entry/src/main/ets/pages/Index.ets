@@ -44,7 +44,7 @@ struct Index {
           .size({ width: 25, height: 25 })
         Text('待办')
           .fontSize(this.fontSize)
-          .fontColor(this.index == 1 ? $r('sys.color.ohos_id_color_text_primary'):"#cdcdcd")
+          .fontColor(this.index == 1 ? $r('sys.color.ohos_id_color_text_primary'):"#ff585858")
       }
       .alignItems(HorizontalAlign.Center)
       .height('100%')
@@ -54,7 +54,7 @@ struct Index {
       })
 
     }
-    .backgroundColor($r('sys.color.ohos_id_color_background'))
+    .backgroundColor($r('sys.color.comp_background_list_card'))
     .width('100%')
     .height(60)
     .alignItems(VerticalAlign.Center)

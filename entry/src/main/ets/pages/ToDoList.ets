@@ -171,12 +171,12 @@ export default struct ToDoList{
               })
           }.width("100%").height(32).alignItems(HorizontalAlign.End)
 
-          Text("待办").fontSize(40).fontColor("#2c2c2c")
+          Text("待办").fontSize(40)
             .padding({bottom: 10,top:3})
           SearchBar({ searchText: this.searchText, clean: this.clean })// 搜索框
             .width('100%')
         }
-        .backgroundColor(Color.White)
+        .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
         .width('100%')
         .height(165)
         .alignItems(HorizontalAlign.Start)
@@ -201,12 +201,13 @@ export default struct ToDoList{
           }
           .alignListItem(ListItemAlign.Center) // 元素布局
           .height('100%')
+          .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
         }
         .height('85%')
 
       }.width('100%')
        .height('100%')
-       .backgroundColor("#F1F3F5")
+      .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
 
 
       // 弹窗

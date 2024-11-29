@@ -5,8 +5,10 @@ import Item_NoTe from '../components/Item_NoTe'
 import NoteDataModel from '../model/NoteModel'
 import NoTeTable from '../database/NoTeTable'
 import PreferencesUtil from '../database/PreferencesUtil'
+import { setDarkColorMode, setLightColorMode, setAutoColorMode } from "../utils/ColorModeChangeFunctions";
 import { collections } from '@kit.ArkTS';
 import { faceDetector } from '@kit.CoreVisionKit'
+import { common } from '@kit.AbilityKit'
 
 @Entry
 @Component
@@ -16,6 +18,10 @@ export default struct note_homepage {
   @State fontSize : number = 0
   // 应用风格
   @State appStyle : number = 1
+  // 应用颜色
+  @State appTheme : number = 0
+
+  private context: common.UIAbilityContext = getContext(this) as common.UIAbilityContext;
 
   // 路径栈
    pathStack: NavPathStack = AppStorage.get("PathStack") as NavPathStack
@@ -170,6 +176,18 @@ export default struct note_homepage {
     PreferencesUtil.getChangeStyle().then((value) => {
       this.appStyle = value as number;
     })
+    PreferencesUtil.getChangeColor().then((value) => {
+      this.appTheme = value as number;
+      if(this.appTheme==0){
+        setAutoColorMode(this.context)
+      }
+      else if(this.appTheme==1){
+        setLightColorMode(this.context)
+      }
+      else{
+        setDarkColorMode(this.context)
+      }
+    })
 
     this.NoteTable.getRadState(() => {
       this.NoteTable.query((date: NoteDataModel[]) => {
@@ -211,6 +229,7 @@ export default struct note_homepage {
       this.order = popInfo.result['order'] === 1 ? true:false;
       this.appStyle = popInfo.result['appStyle']
       this.fontSize = popInfo.result['fontSize']
+      this.appTheme = popInfo.result['theme']
     })
   }
 
@@ -257,18 +276,18 @@ export default struct note_homepage {
                   })
               }.width("100%").height(32).alignItems(HorizontalAlign.End)
 
-              Text("便签").fontSize(40).fontColor("#2c2c2c")
+              Text("便签").fontSize(40)
               // 搜索框
               components_search({ searchText: this.searchText, clean: this.clean })
                 .width('100%')
             }
-            .backgroundColor(Color.White)
+            .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
             .width('100%')
             .height(165)
             .alignItems(HorizontalAlign.Start)
             .padding(16)
           }.height('23%')
-          .backgroundColor(Color.White)
+          .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
           .width('100%')
 
           // 主体内容
@@ -291,7 +310,7 @@ export default struct note_homepage {
             .height('100%')
           }.height('77%')
         }
-        .backgroundColor('#F1F3F5')
+        .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
         .width('100%')
         .height('100%')
 

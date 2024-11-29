@@ -26,8 +26,8 @@ export const setDarkColorMode = (context: common.UIAbilityContext) => {
 }
 
 /**
- * 设置应用的颜色模式为亮色
- * @param context UI能力上下文，用于访问应用的上下文
+ * @param context UI能力上下 * 设置应用的颜色模式为亮色
+ 文，用于访问应用的上下文
  */
 export const setLightColorMode = (context: common.UIAbilityContext) => {
   setColorMode(context, ConfigurationConstant.ColorMode.COLOR_MODE_LIGHT);

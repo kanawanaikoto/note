@@ -2,7 +2,7 @@ import NoteDataModel from "../model/NoteModel"
 import getFormatTime from '../function/FormatTime'
 import PreferencesUtil from "../database/PreferencesUtil"
 
-
+@Preview
 @Component
 export default struct Item_NoTe {
   @ObjectLink note: NoteDataModel
@@ -42,13 +42,13 @@ export default struct Item_NoTe {
             Row({ space: 10 }) {
               Text(getFormatTime(this.note.updateTime).range)
                 .fontSize(this.fontSize * 0.8)
-                .fontColor('#ff303030')
+                //.fontColor('#ff303030')
               Text(getFormatTime(this.note.updateTime).formatDate)
                 .fontSize(this.fontSize * 0.8)
-                .fontColor('#ff303030')
+                //.fontColor('#ff303030')
               Text(getFormatTime(this.note.updateTime).formatTime)
                 .fontSize(this.fontSize * 0.8)
-                .fontColor('#ff303030')
+                //.fontColor('#ff303030')
             }
             .margin({ left: 10 })
             .height(20)
@@ -64,7 +64,7 @@ export default struct Item_NoTe {
             // 正文
             Column() {
               Text(this.note.content)
-                .fontColor('#808080')
+                //.fontColor('#808080')
                 .fontSize(this.fontSize)
                 .maxLines(2)
                 .margin({ right: 10 })
@@ -76,7 +76,9 @@ export default struct Item_NoTe {
           }
           .linearGradient({
             direction: GradientDirection.Bottom,
-            colors: [['#ffffff', 0.5], ['#ffffff', 0.1]]
+            colors: [[$r('sys.color.comp_background_list_card')
+              , 0.5], [$r('sys.color.comp_background_list_card')
+              , 0.1]]
           })
           .height(90)
           .borderRadius({ topRight: 4, bottomRight: 4 })

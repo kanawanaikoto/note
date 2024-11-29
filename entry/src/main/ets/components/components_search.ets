@@ -13,7 +13,7 @@ export default struct SearchBar {
           .onChange((value: string)=>{
             this.searchText = value
           })
-          .backgroundColor('#F1F3F5')
+          //.backgroundColor($r('sys.color.ohos_id_color_sub_background'))
         if(this.searchText){
           Image($r('app.media.close'))
             .margin({right: 10})
@@ -24,7 +24,7 @@ export default struct SearchBar {
         }
       }
       .padding({ right: 52})
-      .backgroundColor('#F1F3F5')
+      .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
       .borderRadius(24)// 圆角
       .width('100%')
   }
