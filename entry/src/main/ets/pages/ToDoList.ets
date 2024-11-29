@@ -4,6 +4,7 @@ import CustomAddDialog from '../components/CustomAddDialog';
 import ToDoTable from "../database/ToDoTable"
 import SearchBar from '../components/components_search';
 import PreferencesUtil from '../database/PreferencesUtil';
+import { promptAction } from '@kit.ArkUI';
 
 // 定义ToDoList组件，用于展示和管理待办事项列表
 @Entry
@@ -136,6 +137,14 @@ export default struct ToDoList{
 
   // 创建（添加）新的待办事项
   onCreate = ()=>{
+    if(this.editContent === ''){
+      promptAction.showToast({
+        message: '内容不能为空',
+        duration: 1600,
+        bottom: 75
+      })
+      return
+    }
     this.addData(this.editContent)
     //this.TodoListStorage = this.OriginTodoList
     this.isEditDone = false
@@ -244,6 +253,10 @@ export default struct ToDoList{
     }
     .height('100%')
     .onClick(()=>{
+      if(this.editContent==="" && this.ifListEditing!==-1)
+      {
+        this.deleteDataByIndex(this.ifListEditing)
+      }
       this.ifListEditing = -1
     })
   }

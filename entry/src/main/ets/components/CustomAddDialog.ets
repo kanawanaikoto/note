@@ -62,12 +62,12 @@ export default struct CustomAddDialog{
         Row(){
           // 取消
           Column(){
-            Image($r('app.media.back')).width(30)
+            Image($r('app.media.back')).width(30).fillColor($r("app.color.some_icons"))
           }
           .onClick(()=>{
             this.onClose()
           })
-          .backgroundColor('#F1F3F5')
+          .backgroundColor($r("app.color.txt_color_2"))
           .width(50)
           .height(50)
           .borderRadius(30)
@@ -75,12 +75,12 @@ export default struct CustomAddDialog{
 
           // 确定
           Column(){
-            Image($r('app.media.save')).width(30)
+            Image($r('app.media.save')).width(30).fillColor($r("app.color.some_icons"))
           }
           .onClick(()=>{
             this.onCreate()
           })
-          .backgroundColor('#F1F3F5')
+          .backgroundColor($r("app.color.txt_color_2"))
           .width(50)
           .height(50)
           .borderRadius(30)
@@ -95,7 +95,7 @@ export default struct CustomAddDialog{
       .width('90%')
       .height('46%')
       .borderRadius(16) // 弹窗圆角
-      .backgroundColor(Color.White)
+      .backgroundColor($r("app.color.search_bar"))
       .margin(8)
       .position({ x: '3.5%', y: '46%' })
 

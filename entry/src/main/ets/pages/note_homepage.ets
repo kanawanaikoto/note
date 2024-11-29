@@ -9,6 +9,7 @@ import { setDarkColorMode, setLightColorMode, setAutoColorMode } from "../utils/
 import { collections } from '@kit.ArkTS';
 import { faceDetector } from '@kit.CoreVisionKit'
 import { common } from '@kit.AbilityKit'
+import { promptAction, ToggleModifier } from '@kit.ArkUI'
 
 @Entry
 @Component
@@ -97,6 +98,14 @@ export default struct note_homepage {
   }
   // 创建新便签
   onCreate = () => {
+     if(this.addNote===""){
+       promptAction.showToast({
+         message: '内容不能为空',
+         duration: 1600,
+         bottom: 75
+       })
+       return
+     }
     const note: NoteDataModel = new NoteDataModel(this.note.length + 1, Date.now(), this.addNote)
     this.note = this.originNoteList
     this.NoteTable.insertData(note, (id: number) => {
@@ -145,6 +154,10 @@ export default struct note_homepage {
   }
   // 确认修改
   onEdit = () => {
+     if(this.editNote===""){
+       this.onDelete()
+       return
+       }
     this.originNoteList[this.editIndex].updateTime = new Date().getTime()
     this.originNoteList[this.editIndex].content = this.editNote
     this.NoteTable.updateData(this.originNoteList[this.editIndex], () => {

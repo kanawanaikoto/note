@@ -3,6 +3,7 @@ import note_homepage from './note_homepage'
 import ToDoList from './ToDoList'
 import { Task, TodoModels} from '../model/ToDoModels';
 import PreferencesUtil from '../database/PreferencesUtil';
+import { window } from '@kit.ArkUI';
 
 @Entry
 @Component
@@ -17,6 +18,12 @@ struct Index {
       this.fontSize = value as number;
       console.log("fontSize: " + this.fontSize);
     })
+    let type = window.AvoidAreaType.TYPE_NAVIGATION_INDICATOR; // 以导航条避让为例
+    window.getLastWindow(getContext()).then(win => {
+      let avoidArea = win.getWindowAvoidArea(type);
+      let bottomRectHeight = avoidArea.bottomRect.height; // 获取到导航条区域的高度
+      AppStorage.setOrCreate('bottomRectHeight', bottomRectHeight);
+      })
   }
 
   // 自定义构建器，用于创建导航工具栏
@@ -89,6 +96,5 @@ struct Index {
     .size({ width: '100%', height: '100%' })
     .backgroundColor($r('sys.color.ohos_id_color_background'))
     .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP])
-
   }
 }

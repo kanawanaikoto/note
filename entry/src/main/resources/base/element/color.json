@@ -5,6 +5,10 @@
       "value": "#FFFFFF"
     },
     {
+      "name": "txt_color_2",
+      "value": "#F1F3F5"
+    },
+    {
       "name": "tar_bar_selected",
       "value": "#E90E0C0A"
     },
