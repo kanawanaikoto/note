@@ -56,7 +56,8 @@ struct SettingsPage {
       Column({ space: 8 }) {
         Row() {
           Button() {
-            Image($r("app.media.back_2"))
+            Image($r("app.media.back"))
+              .fillColor($r('app.color.some_icons'))
           }
           .backgroundColor(Color.Transparent)
           .width(30)

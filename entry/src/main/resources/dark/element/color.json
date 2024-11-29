@@ -11,6 +11,22 @@
     {
       "name": "txt_color_2",
       "value": "#F1F3F5"
+    },
+    {
+      "name": "tar_bar_selected",
+      "value": "#FFEAEDEE"
+    },
+    {
+      "name": "tar_bar_unselected",
+      "value": "#FF626161"
+    },
+    {
+      "name": "search_bar",
+      "value": "#FF191919"
+    },
+    {
+      "name": "some_icons",
+      "value": "#FFB1ADAD"
     }
   ]
 }

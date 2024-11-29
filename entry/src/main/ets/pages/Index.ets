@@ -25,11 +25,12 @@ struct Index {
 
       // 便签页面的图标和文字
       Column() {
-        Image(this.index == 1 ?$r("app.media.note_f"):$r("app.media.note"))
+        Image($r('app.media.note'))
           .size({ width: 25, height: 25 })
+          .fillColor(this.index == 0 ? $r('app.color.tar_bar_selected'):$r('app.color.tar_bar_unselected'))
         Text('便签')
           .fontSize(this.fontSize)
-          .fontColor(this.index == 0 ? $r('sys.color.ohos_id_color_text_primary'):"#cdcdcd")
+          .fontColor(this.index == 0 ? $r('app.color.tar_bar_selected'):$r('app.color.tar_bar_unselected'))
       }
       .alignItems(HorizontalAlign.Center)
       .height('100%')
@@ -40,11 +41,12 @@ struct Index {
 
       // 待办页面的图标和文字
       Column() {
-        Image(this.index == 0 ? $r("app.media.to_do_f"):$r("app.media.to_do"))
+        Image($r('app.media.todo'))
           .size({ width: 25, height: 25 })
+          .fillColor(this.index == 1 ? $r( 'app.color.tar_bar_selected') : $r('app.color.tar_bar_unselected'))
         Text('待办')
           .fontSize(this.fontSize)
-          .fontColor(this.index == 1 ? $r('sys.color.ohos_id_color_text_primary'):"#ff585858")
+          .fontColor(this.index == 1 ? $r('app.color.tar_bar_selected'):$r('app.color.tar_bar_unselected'))
       }
       .alignItems(HorizontalAlign.Center)
       .height('100%')

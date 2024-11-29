@@ -26,7 +26,7 @@ export default struct TabBarView{
           }.width('100%')
            .height('100%')
            .backgroundColor('#adf5f5f5')
-        }.tabBar(this.tabBuilder("便签",0, $r("app.media.note_f"),$r("app.media.note")))
+        }.tabBar(this.tabBuilder("便签",0, $r('app.color.tar_bar_selected'), $r('app.color.tar_bar_unselected')))
         TabContent() {
          Column(){
             //内容
@@ -34,7 +34,7 @@ export default struct TabBarView{
           }.width('100%')
            .height('100%')
            .backgroundColor('#adf5f5f5')
-        }.tabBar(this.tabBuilder("待办",1,$r("app.media.to_do_f"),$r("app.media.to_do")))//标题
+        }.tabBar(this.tabBuilder("待办",1,$r('app.color.tar_bar_selected'), $r('app.color.tar_bar_unselected')))//标题
       } .backgroundColor('#fff')
         .onChange((index: number)=>{//触发事件
         this.currentIndex = index//更新当前选中项

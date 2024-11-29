@@ -27,7 +27,7 @@ export default struct Item_NoTe {
             .height(90)
             .linearGradient({
               direction: GradientDirection.Bottom,
-              colors: [['#d9d9d9', 0.5], ['#d9d9d9', 0.1]]
+              colors: [[$r('app.color.some_icons'), 0.5], [$r('app.color.some_icons'), 0.1]]
             })
             .borderRadius({ topLeft: 4, bottomLeft: 4 })
           Divider()

@@ -3,6 +3,22 @@
     {
       "name": "start_window_background",
       "value": "#FFFFFF"
+    },
+    {
+      "name": "tar_bar_selected",
+      "value": "#E90E0C0A"
+    },
+    {
+      "name": "tar_bar_unselected",
+      "value": "#E2CACCCD"
+    },
+    {
+      "name": "search_bar",
+      "value": "#FFFFFFFF"
+    },
+    {
+      "name": "some_icons",
+      "value": "#FF817E7E"
     }
   ]
 }
