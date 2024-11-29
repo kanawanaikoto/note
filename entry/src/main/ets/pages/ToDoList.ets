@@ -190,9 +190,9 @@ export default struct ToDoList{
         .width('100%')
         .height(165)
         .alignItems(HorizontalAlign.Start)
-        .padding(16)
-      }.height('23%')
-      .backgroundColor(Color.White)
+        .padding(18)
+      }.height('22%')
+      .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
       .width('100%')
         // 待办事项列表
         Column({ space: 0 }){

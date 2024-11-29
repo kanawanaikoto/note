@@ -93,7 +93,7 @@ export default struct CustomAddDialog{
 
       }
       .width('90%')
-      .height('46%')
+      .height('43%')
       .borderRadius(16) // 弹窗圆角
       .backgroundColor($r("app.color.search_bar"))
       .margin(8)
