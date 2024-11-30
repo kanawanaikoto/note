@@ -11,6 +11,7 @@ export default struct Item_ToDoList{// 待办事项
 
   @Link fontSize: number
 
+  @State ifInFontSizeArea: boolean = false
 
   @Builder
   CreateIcon(icon:Resource){ // 图标
@@ -30,10 +31,12 @@ export default struct Item_ToDoList{// 待办事项
               Image($r("app.media.ic_ok"))
                 .width(30)
                 .height(30)
+                .fillColor($r('app.color.some_icons'))
             } else {
               Image($r("app.media.ic_ok_f"))
                 .width(30)
                 .height(30)
+                .fillColor($r('app.color.some_icons'))
             }
           }
           .backgroundColor('transparent')
@@ -56,6 +59,7 @@ export default struct Item_ToDoList{// 待办事项
               text: this.task.task
             })
               .fontSize(this.fontSize)
+              .focusable(!this.ifInFontSizeArea)
               .id('task_input' + this.task.id)
               .onChange((strIn: string) => {
                 this.task.task = strIn

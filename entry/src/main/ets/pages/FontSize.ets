@@ -57,8 +57,8 @@ struct FontSize {
         .padding({ left: 16 })
 
         Item_NoTe({ note: this.note,fontSize:this.fontSize })
-        Item_ToDoList({ task: this.todoOK, IndexOfListChanging: this.isEditing,fontSize:this.fontSize, IndexOfListChangedBefore: this.preEdit })
-        Item_ToDoList({ task: this.todo, IndexOfListChanging: this.isEditing,fontSize:this.fontSize, IndexOfListChangedBefore: this.preEdit })
+        Item_ToDoList({ task: this.todoOK, IndexOfListChanging: this.isEditing,fontSize:this.fontSize, IndexOfListChangedBefore: this.preEdit, ifInFontSizeArea: true })
+        Item_ToDoList({ task: this.todo, IndexOfListChanging: this.isEditing,fontSize:this.fontSize, IndexOfListChangedBefore: this.preEdit, ifInFontSizeArea: true })
 
         Blank()
         SliderLayout({
