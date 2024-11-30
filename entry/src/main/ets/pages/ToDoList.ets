@@ -268,7 +268,7 @@ export default struct ToDoList{
       .onClick(() => {
         // 添加待办事项的逻辑
         this.isEditDone = true
-        this.ifListEditing = -1
+        this.ifListEditing = null
         this.editContent = ""
       })
     }

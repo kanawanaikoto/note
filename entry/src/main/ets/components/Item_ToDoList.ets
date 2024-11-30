@@ -11,7 +11,6 @@ export default struct Item_ToDoList{// 待办事项
 
   @Link fontSize: number
 
-  @State ifOnFocus: boolean = false
 
   @Builder
   CreateIcon(icon:Resource){ // 图标
@@ -56,11 +55,8 @@ export default struct Item_ToDoList{// 待办事项
               placeholder: this.task.task,
               text: this.task.task
             })
-              .defaultFocus(true)
-              .focusable(this.ifOnFocus)
               .fontSize(this.fontSize)
-              .defaultFocus(true)
-              .id('task_input')
+              .id('task_input' + this.task.id)
               .onChange((strIn: string) => {
                 this.task.task = strIn
                 // if (strIn.length === 0)
@@ -71,7 +67,7 @@ export default struct Item_ToDoList{// 待办事项
                   this.IndexOfListChangedBefore = this.task.id
               })
               .onAppear(()=>{
-                focusControl.requestFocus('task_input')
+                focusControl.requestFocus('task_input' + this.task.id)
               })
 
           }
@@ -102,7 +98,6 @@ export default struct Item_ToDoList{// 待办事项
       .height(60) // 高度
       .onClick(() => { //文本编辑
         this.IndexOfListChanging = this.task.id
-        this.ifOnFocus = true
       })
     }
 }
