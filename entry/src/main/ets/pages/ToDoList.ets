@@ -23,6 +23,7 @@ export default struct ToDoList{
 
   // 搜索框内容
   @State @Watch('onsearchText') searchText: string = ""
+  @State @Watch('onDeleteNullItem') theListEditIsNull: number|null = null;
 
   // 搜索框内容改变
   onsearchText() {
@@ -42,6 +43,13 @@ export default struct ToDoList{
     }
   }
 
+  onDeleteNullItem():void {
+    if (this.theListEditIsNull !== null) {
+      this.deleteDataByIndex(this.theListEditIsNull)
+      this.theListEditIsNull = null
+    }
+  }
+
   clean = ()=>{
     this.searchText = ""
   }
@@ -56,8 +64,7 @@ export default struct ToDoList{
   @State editContent: string = ""
 
   // 当前正在编辑的待办事项索引，-1表示没有编辑
-  @State ifListEditing: number = -1
-
+  @State ifListEditing: number|null = null
 
    addData(data:string):void {
     let task: Task = new Task(0, data, 0)
@@ -97,6 +104,17 @@ export default struct ToDoList{
       this.TodoListStorage = this.OriginTodoList
     })
   }
+
+  getDataByIndex(index: number):Task|null{
+    let i=0;
+    for(;i<this.TodoListStorage.length;i++){
+      if(this.TodoListStorage[i].id === index){
+        return this.TodoListStorage[i]
+      }
+    }
+    return null;
+  }
+
   // 构建列表项末尾的操作按钮
   @Builder
   getListEnd(item:Task){
@@ -183,8 +201,11 @@ export default struct ToDoList{
 
           Text("待办").fontSize(40)
             .padding({bottom: 10,top:3})
-          SearchBar({ searchText: this.searchText, clean: this.clean })// 搜索框
+          SearchBar({ searchText: this.searchText, clean: this.clean , todoEditStatus: this.ifListEditing})// 搜索框
             .width('100%')
+            .onFocus(()=>{
+              this.ifListEditing = null
+            })
         }
         .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
         .width('100%')
@@ -199,7 +220,7 @@ export default struct ToDoList{
           List({ space: 6 }) {
             ForEach(this.TodoListStorage, (item: Task) => {
               ListItem() {
-                Item_ToDoList({ task: item, IndexOfListChanging: this.ifListEditing,fontSize:this.fontSize })
+                Item_ToDoList({ task: item, IndexOfListChanging: this.ifListEditing,fontSize:this.fontSize ,IndexOfListChangedBefore: this.theListEditIsNull })
               }.height(60)
               .swipeAction({end:{
                 builder:()=> {
@@ -253,11 +274,14 @@ export default struct ToDoList{
     }
     .height('100%')
     .onClick(()=>{
-      if(this.editContent==="" && this.ifListEditing!==-1)
-      {
-        this.deleteDataByIndex(this.ifListEditing)
-      }
-      this.ifListEditing = -1
+      // if(this.ifListEditing !== null){
+      //   let result :Task|null = this.getDataByIndex(this.ifListEditing)
+      //   if(result !== null && result.task.length === 0){
+      //     this.deleteDataByIndex(this.ifListEditing)
+      //     this.ifListEditing = null
+      //   }
+      // }
+      this.ifListEditing = null
     })
   }
 }

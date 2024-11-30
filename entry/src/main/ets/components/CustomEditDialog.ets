@@ -51,11 +51,14 @@ export default struct CustomEditDialog{
             placeholder: '请输入内容',
             text: this.edit
           })
-            .defaultFocus(true)
+            .id('textArea')
             .height('100%')
             .onChange((value)=>{
             this.edit = value
           })
+            .onAppear(()=>{
+              focusControl.requestFocus('textArea')
+            })
         }
         .height('75%')
         .padding(8)

@@ -44,12 +44,14 @@ struct CodeGenieNotepad {
     NavDestination() {
       Column() {
         Row() {
-          Image($r('app.media.back_2')).width(24)
+          Image($r('app.media.back')).width(24)
+            .fillColor($r("app.color.some_icons"))
             .onClick(() => {
               this.onClose();
             })
           Blank()
           Image($r('app.media.save')).width(24)
+            .fillColor($r("app.color.some_icons"))
             .onClick(() => {
               this.onCreate();
             })

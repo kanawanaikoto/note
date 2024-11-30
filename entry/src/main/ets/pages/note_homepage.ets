@@ -47,6 +47,8 @@ export default struct note_homepage {
   @State editIndex: number = -1
   // 数据库
   private NoteTable: NoTeTable = new NoTeTable()
+  //只是为了填一下searchbar的变量罢了
+  @State aUselessVariableForSearchText: number|null = null
   // 清空搜索框
   clean = () => {
     this.searchText = ""
@@ -292,7 +294,7 @@ export default struct note_homepage {
 
               Text("便签").fontSize(40)
               // 搜索框
-              components_search({ searchText: this.searchText, clean: this.clean })
+              components_search({ searchText: this.searchText, clean: this.clean, todoEditStatus: this.aUselessVariableForSearchText })
                 .width('100%')
             }
             .backgroundColor($r('sys.color.ohos_id_color_sub_background'))
