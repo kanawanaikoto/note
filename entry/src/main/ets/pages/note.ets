@@ -1,5 +1,4 @@
-
-import getFormatTime from '../function/FormatTime';
+import getFormatTime from '../utils/FormatTime';
 import NoteDataModel from '../model/NoteModel';
 
 @Builder

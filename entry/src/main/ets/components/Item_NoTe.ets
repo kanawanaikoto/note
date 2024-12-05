@@ -1,5 +1,5 @@
 import NoteDataModel from "../model/NoteModel"
-import getFormatTime from '../function/FormatTime'
+import getFormatTime from '../utils/FormatTime'
 import PreferencesUtil from "../database/PreferencesUtil"
 
 @Preview
