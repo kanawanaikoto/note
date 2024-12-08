@@ -39,13 +39,13 @@ export default class SettingData {
   static readonly SET_SIZE_EXTRA_LARGE: number = 24;
 
   // 巨大号字体大小常量
-  static readonly SET_SIZE_HUGE: number = 30;
+  static readonly SET_SIZE_HUGE: number = 26;
 
   // 滑动条最小值常量
-  static readonly SET_SLIDER_MIN: number = 14;
+  static readonly SET_SLIDER_MIN: number = 18;
 
   // 滑动条最大值常量
-  static readonly SET_SLIDER_MAX: number = 22;
+  static readonly SET_SLIDER_MAX: number = 26;
 
   // 滑动条步长常量
   static readonly SET_SLIDER_STEP: number = 2;
