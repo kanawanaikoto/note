@@ -43,9 +43,9 @@ export default struct Item_ToDoList{// 待办事项
           .position({ x: '10%' })
           .width(30)
           .height('100%')
-
           .onClick(() => {
             this.task.complete = this.task.complete === 0 ? 1 : 0
+            this.IndexOfListChanging = null
           })
         }
         .width('20%')
