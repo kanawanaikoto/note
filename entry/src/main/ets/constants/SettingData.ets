@@ -20,13 +20,13 @@ export default class SettingData {
 
 
   // 标准字体大小常量
-  static readonly SET_SIZE_NORMAL: number = 16;
+  static readonly SET_SIZE_NORMAL: number = 20;
   // 大号字体大小常量
-  static readonly SET_SIZE_LARGE: number = 18;
+  static readonly SET_SIZE_LARGE: number = 22;
   // 小号字体大小常量
-  static readonly SET_SIZE_SMALL: number = 14;
+  static readonly SET_SIZE_SMALL: number = 18;
   // 默认字体大小常量
-  static readonly SET_SIZE_DEFAULT: number = 16;
+  static readonly SET_SIZE_DEFAULT: number = 20;
 
   // 应用排序的键名常量
   static readonly APP_SORT: number = 1;
@@ -36,10 +36,10 @@ export default class SettingData {
   static readonly APP_COLOR: number = 0;
 
   // 超大号字体大小常量
-  static readonly SET_SIZE_EXTRA_LARGE: number = 20;
+  static readonly SET_SIZE_EXTRA_LARGE: number = 24;
 
   // 巨大号字体大小常量
-  static readonly SET_SIZE_HUGE: number = 24;
+  static readonly SET_SIZE_HUGE: number = 30;
 
   // 滑动条最小值常量
   static readonly SET_SLIDER_MIN: number = 14;

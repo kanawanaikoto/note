@@ -151,15 +151,15 @@ struct SliderLayout {
 
 function getfontSize(description: number){
   switch (description){
-    case 14:
+    case SettingData.SET_SIZE_SMALL:
       return "小号"
-    case 16:
+    case SettingData.SET_SIZE_NORMAL:
       return "标准"
-    case 18:
+    case SettingData.SET_SIZE_LARGE:
       return "大号"
-    case 20:
+    case SettingData.SET_SIZE_EXTRA_LARGE:
       return "超大号"
-    case 24:
+    case SettingData.SET_SIZE_HUGE:
       return "巨大号"
     default:
       return "默认"
